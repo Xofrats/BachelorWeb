@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<h3>testing</h3>
+
+@using (Html.BeginForm("BTNLogin", "Login", FormMethod.Post))
+{
+    <form>
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" onclick="location.href='@Url.Action("Index", "Home")'" class="btn btn-primary">Go back</button>
+            </div>
+        </div>
+    </form>
+}

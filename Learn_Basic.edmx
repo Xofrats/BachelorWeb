@@ -1,0 +1,1116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Learn_BasicModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tid" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Spil" Type="int" />
+          <Property Name="ID_Elev" Type="int" />
+          <Property Name="ID_Gæst" Type="int" />
+          <Property Name="Dato" Type="datetime" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Afsluttet" Type="bit" />
+          <Property Name="Hints" Type="int" />
+          <Property Name="LastCheckpoint" Type="int" />
+        </EntityType>
+        <EntityType Name="Elev">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fornavn" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Efternavn" Type="nvarchar" MaxLength="20" />
+          <Property Name="DoB" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Gæst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="Nickname" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Niveau">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Navn" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Spil">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SpilNiveauer">
+          <Key>
+            <PropertyRef Name="ID_Spil" />
+            <PropertyRef Name="ID_Niveau" />
+          </Key>
+          <Property Name="ID_Spil" Type="int" Nullable="false" />
+          <Property Name="ID_Niveau" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OpgaveSpil">
+          <Key>
+            <PropertyRef Name="ID_Opgave" />
+            <PropertyRef Name="ID_Spil" />
+          </Key>
+          <Property Name="ID_Opgave" Type="int" Nullable="false" />
+          <Property Name="ID_Spil" Type="int" Nullable="false" />
+          <Property Name="ID_Niveau" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kategori" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="FagLærer">
+          <Key>
+            <PropertyRef Name="ID_Fag" />
+            <PropertyRef Name="ID_Lærer" />
+          </Key>
+          <Property Name="ID_Fag" Type="int" Nullable="false" />
+          <Property Name="ID_Lærer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Klasse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Navn" Type="nvarchar" MaxLength="10" />
+          <Property Name="Klassetrin" Type="int" />
+          <Property Name="StartÅr" Type="date" />
+        </EntityType>
+        <EntityType Name="KlasseElever">
+          <Key>
+            <PropertyRef Name="ID_Klasse" />
+            <PropertyRef Name="ID_Elev" />
+          </Key>
+          <Property Name="ID_Klasse" Type="int" Nullable="false" />
+          <Property Name="ID_Elev" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KlasseLærer">
+          <Key>
+            <PropertyRef Name="ID_Klasse" />
+            <PropertyRef Name="ID_Lærer" />
+          </Key>
+          <Property Name="ID_Klasse" Type="int" Nullable="false" />
+          <Property Name="ID_Lærer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lærer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
+          <Property Name="Efternavn" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoB" Type="date" />
+          <Property Name="Køn" Type="char" MaxLength="1" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Opgave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Beskrivelse" Type="nvarchar(max)" />
+          <Property Name="ID_Fag" Type="int" />
+          <Property Name="ID_Lærer" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OpgaveElever">
+          <Key>
+            <PropertyRef Name="ID_Opgave" />
+            <PropertyRef Name="ID_Elev" />
+          </Key>
+          <Property Name="ID_Opgave" Type="int" Nullable="false" />
+          <Property Name="ID_Elev" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Learn_Basic.Both.Highscore' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Highscore">
+          <Property Name="Score" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="rn" Type="bigint" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Learn_Basic.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Learn_Basic.sys.ipv6_database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ipv6_database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ipv6_address" />
+            <PropertyRef Name="end_ipv6_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ipv6_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ipv6_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_Data_Elev">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="0..1" />
+          <End Role="Data" Type="Self.Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ID_Elev" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Data_Spil">
+          <End Role="Spil" Type="Self.Spil" Multiplicity="0..1" />
+          <End Role="Data" Type="Self.Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FagLærer_Fag">
+          <End Role="Fag" Type="Self.Fag" Multiplicity="1" />
+          <End Role="FagLærer" Type="Self.FagLærer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FagLærer">
+              <PropertyRef Name="ID_Fag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FagLærer_Lærer">
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="1" />
+          <End Role="FagLærer" Type="Self.FagLærer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lærer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FagLærer">
+              <PropertyRef Name="ID_Lærer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KlasseElever_Elev">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="1" />
+          <End Role="KlasseElever" Type="Self.KlasseElever" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KlasseElever">
+              <PropertyRef Name="ID_Elev" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KlasseElever_Klasse">
+          <End Role="Klasse" Type="Self.Klasse" Multiplicity="1" />
+          <End Role="KlasseElever" Type="Self.KlasseElever" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klasse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KlasseElever">
+              <PropertyRef Name="ID_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KlasseLærer_Klasse">
+          <End Role="Klasse" Type="Self.Klasse" Multiplicity="1" />
+          <End Role="KlasseLærer" Type="Self.KlasseLærer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klasse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KlasseLærer">
+              <PropertyRef Name="ID_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KlasseLærer_Lærer">
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="1" />
+          <End Role="KlasseLærer" Type="Self.KlasseLærer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lærer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KlasseLærer">
+              <PropertyRef Name="ID_Lærer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opgave_Fag">
+          <End Role="Fag" Type="Self.Fag" Multiplicity="0..1" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Fag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opgave_Lærer">
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="0..1" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lærer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Lærer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveElever_Elev">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="1" />
+          <End Role="OpgaveElever" Type="Self.OpgaveElever" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveElever">
+              <PropertyRef Name="ID_Elev" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveElever_Opgave">
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="1" />
+          <End Role="OpgaveElever" Type="Self.OpgaveElever" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opgave">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveElever">
+              <PropertyRef Name="ID_Opgave" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Niveau">
+          <End Role="Niveau" Type="Self.Niveau" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Niveau">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Niveau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Opgave">
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opgave">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Opgave" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Spil">
+          <End Role="Spil" Type="Self.Spil" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpilNiveauer_Niveau">
+          <End Role="Niveau" Type="Self.Niveau" Multiplicity="1" />
+          <End Role="SpilNiveauer" Type="Self.SpilNiveauer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Niveau">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SpilNiveauer">
+              <PropertyRef Name="ID_Niveau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Learn_BasicModelStoreContainer">
+          <EntitySet Name="Data" EntityType="Self.Data" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="Elev" EntityType="Self.Elev" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="Gæst" EntityType="Self.Gæst" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="Niveau" EntityType="Self.Niveau" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="Spil" EntityType="Self.Spil" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="SpilNiveauer" EntityType="Self.SpilNiveauer" Schema="Both" store:Type="Tables" />
+          <EntitySet Name="OpgaveSpil" EntityType="Self.OpgaveSpil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fag" EntityType="Self.Fag" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="FagLærer" EntityType="Self.FagLærer" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="Klasse" EntityType="Self.Klasse" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="KlasseElever" EntityType="Self.KlasseElever" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="KlasseLærer" EntityType="Self.KlasseLærer" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="Lærer" EntityType="Self.Lærer" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="Opgave" EntityType="Self.Opgave" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="OpgaveElever" EntityType="Self.OpgaveElever" Schema="Web" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ipv6_database_firewall_rules" EntityType="Self.ipv6_database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [ipv6_database_firewall_rules].[id] AS [id], 
+    [ipv6_database_firewall_rules].[name] AS [name], 
+    [ipv6_database_firewall_rules].[start_ipv6_address] AS [start_ipv6_address], 
+    [ipv6_database_firewall_rules].[end_ipv6_address] AS [end_ipv6_address], 
+    [ipv6_database_firewall_rules].[create_date] AS [create_date], 
+    [ipv6_database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[ipv6_database_firewall_rules] AS [ipv6_database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Login" EntityType="Self.Login" store:Type="Views" store:Schema="VR">
+            <DefiningQuery>SELECT 
+    [Login].[ID] AS [ID], 
+    [Login].[Email] AS [Email], 
+    [Login].[Password] AS [Password]
+    FROM [VR].[Login] AS [Login]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Data_Elev" Association="Self.FK_Data_Elev">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Data_Spil" Association="Self.FK_Data_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FagLærer_Fag" Association="Self.FK_FagLærer_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="FagLærer" EntitySet="FagLærer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FagLærer_Lærer" Association="Self.FK_FagLærer_Lærer">
+            <End Role="Lærer" EntitySet="Lærer" />
+            <End Role="FagLærer" EntitySet="FagLærer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KlasseElever_Elev" Association="Self.FK_KlasseElever_Elev">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="KlasseElever" EntitySet="KlasseElever" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KlasseElever_Klasse" Association="Self.FK_KlasseElever_Klasse">
+            <End Role="Klasse" EntitySet="Klasse" />
+            <End Role="KlasseElever" EntitySet="KlasseElever" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KlasseLærer_Klasse" Association="Self.FK_KlasseLærer_Klasse">
+            <End Role="Klasse" EntitySet="Klasse" />
+            <End Role="KlasseLærer" EntitySet="KlasseLærer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KlasseLærer_Lærer" Association="Self.FK_KlasseLærer_Lærer">
+            <End Role="Lærer" EntitySet="Lærer" />
+            <End Role="KlasseLærer" EntitySet="KlasseLærer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Fag" Association="Self.FK_Opgave_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Lærer" Association="Self.FK_Opgave_Lærer">
+            <End Role="Lærer" EntitySet="Lærer" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveElever_Elev" Association="Self.FK_OpgaveElever_Elev">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="OpgaveElever" EntitySet="OpgaveElever" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveElever_Opgave" Association="Self.FK_OpgaveElever_Opgave">
+            <End Role="Opgave" EntitySet="Opgave" />
+            <End Role="OpgaveElever" EntitySet="OpgaveElever" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Niveau" Association="Self.FK_OpgaveSpil_Niveau">
+            <End Role="Niveau" EntitySet="Niveau" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Opgave" Association="Self.FK_OpgaveSpil_Opgave">
+            <End Role="Opgave" EntitySet="Opgave" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Spil" Association="Self.FK_OpgaveSpil_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpilNiveauer_Niveau" Association="Self.FK_SpilNiveauer_Niveau">
+            <End Role="Niveau" EntitySet="Niveau" />
+            <End Role="SpilNiveauer" EntitySet="SpilNiveauer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Learn_BasicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Spil" Type="Int32" />
+          <Property Name="ID_Elev" Type="Int32" />
+          <Property Name="ID_Gæst" Type="Int32" />
+          <Property Name="Dato" Type="DateTime" Precision="3" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Afsluttet" Type="Boolean" />
+          <Property Name="Hints" Type="Int32" />
+          <Property Name="LastCheckpoint" Type="Int32" />
+          <NavigationProperty Name="Elev" Relationship="Self.FK_Data_Elev" FromRole="Data" ToRole="Elev" />
+          <NavigationProperty Name="Spil" Relationship="Self.FK_Data_Spil" FromRole="Data" ToRole="Spil" />
+        </EntityType>
+        <EntityType Name="Elev">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fornavn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Efternavn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DoB" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Data" Relationship="Self.FK_Data_Elev" FromRole="Elev" ToRole="Data" />
+          <NavigationProperty Name="Klasse" Relationship="Self.KlasseElever" FromRole="Elev" ToRole="Klasse" />
+          <NavigationProperty Name="Opgave" Relationship="Self.OpgaveElever" FromRole="Elev" ToRole="Opgave" />
+        </EntityType>
+        <EntityType Name="Gæst">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Nickname" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Niveau">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Navn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OpgaveSpil" Relationship="Self.FK_OpgaveSpil_Niveau" FromRole="Niveau" ToRole="OpgaveSpil" />
+          <NavigationProperty Name="SpilNiveauer" Relationship="Self.FK_SpilNiveauer_Niveau" FromRole="Niveau" ToRole="SpilNiveauer" />
+        </EntityType>
+        <EntityType Name="Spil">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Data" Relationship="Self.FK_Data_Spil" FromRole="Spil" ToRole="Data" />
+          <NavigationProperty Name="OpgaveSpil" Relationship="Self.FK_OpgaveSpil_Spil" FromRole="Spil" ToRole="OpgaveSpil" />
+        </EntityType>
+        <EntityType Name="SpilNiveauer">
+          <Key>
+            <PropertyRef Name="ID_Spil" />
+            <PropertyRef Name="ID_Niveau" />
+          </Key>
+          <Property Name="ID_Spil" Type="Int32" Nullable="false" />
+          <Property Name="ID_Niveau" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Niveau" Relationship="Self.FK_SpilNiveauer_Niveau" FromRole="SpilNiveauer" ToRole="Niveau" />
+        </EntityType>
+        <EntityType Name="OpgaveSpil">
+          <Key>
+            <PropertyRef Name="ID_Opgave" />
+            <PropertyRef Name="ID_Spil" />
+          </Key>
+          <Property Name="ID_Opgave" Type="Int32" Nullable="false" />
+          <Property Name="ID_Spil" Type="Int32" Nullable="false" />
+          <Property Name="ID_Niveau" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" />
+          <NavigationProperty Name="Niveau" Relationship="Self.FK_OpgaveSpil_Niveau" FromRole="OpgaveSpil" ToRole="Niveau" />
+          <NavigationProperty Name="Spil" Relationship="Self.FK_OpgaveSpil_Spil" FromRole="OpgaveSpil" ToRole="Spil" />
+          <NavigationProperty Name="Opgave" Relationship="Self.FK_OpgaveSpil_Opgave" FromRole="OpgaveSpil" ToRole="Opgave" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kategori" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opgave" Relationship="Self.FK_Opgave_Fag" FromRole="Fag" ToRole="Opgave" />
+          <NavigationProperty Name="Lærer" Relationship="Self.FagLærer" FromRole="Fag" ToRole="Lærer" />
+        </EntityType>
+        <EntityType Name="Klasse">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Navn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Klassetrin" Type="Int32" />
+          <Property Name="StartÅr" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Elev" Relationship="Self.KlasseElever" FromRole="Klasse" ToRole="Elev" />
+          <NavigationProperty Name="Lærer" Relationship="Self.KlasseLærer" FromRole="Klasse" ToRole="Lærer" />
+        </EntityType>
+        <EntityType Name="Lærer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Efternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoB" Type="DateTime" Precision="0" />
+          <Property Name="Køn" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opgave" Relationship="Self.FK_Opgave_Lærer" FromRole="Lærer" ToRole="Opgave" />
+          <NavigationProperty Name="Fag" Relationship="Self.FagLærer" FromRole="Lærer" ToRole="Fag" />
+          <NavigationProperty Name="Klasse" Relationship="Self.KlasseLærer" FromRole="Lærer" ToRole="Klasse" />
+        </EntityType>
+        <EntityType Name="Opgave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Beskrivelse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Fag" Type="Int32" />
+          <Property Name="ID_Lærer" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OpgaveSpil" Relationship="Self.FK_OpgaveSpil_Opgave" FromRole="Opgave" ToRole="OpgaveSpil" />
+          <NavigationProperty Name="Fag" Relationship="Self.FK_Opgave_Fag" FromRole="Opgave" ToRole="Fag" />
+          <NavigationProperty Name="Lærer" Relationship="Self.FK_Opgave_Lærer" FromRole="Opgave" ToRole="Lærer" />
+          <NavigationProperty Name="Elev" Relationship="Self.OpgaveElever" FromRole="Opgave" ToRole="Elev" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ipv6_database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ipv6_address" />
+            <PropertyRef Name="end_ipv6_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ipv6_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ipv6_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Data_Elev">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="0..1" />
+          <End Role="Data" Type="Self.Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elev">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ID_Elev" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Data_Spil">
+          <End Role="Spil" Type="Self.Spil" Multiplicity="0..1" />
+          <End Role="Data" Type="Self.Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Niveau">
+          <End Role="Niveau" Type="Self.Niveau" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Niveau">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Niveau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpilNiveauer_Niveau">
+          <End Role="Niveau" Type="Self.Niveau" Multiplicity="1" />
+          <End Role="SpilNiveauer" Type="Self.SpilNiveauer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Niveau">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SpilNiveauer">
+              <PropertyRef Name="ID_Niveau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Spil">
+          <End Role="Spil" Type="Self.Spil" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpgaveSpil_Opgave">
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="1" />
+          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opgave">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Opgave" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opgave_Fag">
+          <End Role="Fag" Type="Self.Fag" Multiplicity="0..1" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Fag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opgave_Lærer">
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="0..1" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lærer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Lærer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FagLærer">
+          <End Role="Fag" Type="Self.Fag" Multiplicity="*" />
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="*" />
+        </Association>
+        <Association Name="KlasseElever">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="*" />
+          <End Role="Klasse" Type="Self.Klasse" Multiplicity="*" />
+        </Association>
+        <Association Name="KlasseLærer">
+          <End Role="Klasse" Type="Self.Klasse" Multiplicity="*" />
+          <End Role="Lærer" Type="Self.Lærer" Multiplicity="*" />
+        </Association>
+        <Association Name="OpgaveElever">
+          <End Role="Elev" Type="Self.Elev" Multiplicity="*" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Learn_BasicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Data" EntityType="Self.Data" />
+          <EntitySet Name="Elev" EntityType="Self.Elev" />
+          <EntitySet Name="Gæst" EntityType="Self.Gæst" />
+          <EntitySet Name="Niveau" EntityType="Self.Niveau" />
+          <EntitySet Name="Spil" EntityType="Self.Spil" />
+          <EntitySet Name="SpilNiveauer" EntityType="Self.SpilNiveauer" />
+          <EntitySet Name="OpgaveSpil" EntityType="Self.OpgaveSpil" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Test" EntityType="Self.Test" />
+          <EntitySet Name="Fag" EntityType="Self.Fag" />
+          <EntitySet Name="Klasse" EntityType="Self.Klasse" />
+          <EntitySet Name="Lærer" EntityType="Self.Lærer" />
+          <EntitySet Name="Opgave" EntityType="Self.Opgave" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <EntitySet Name="ipv6_database_firewall_rules" EntityType="Self.ipv6_database_firewall_rules" />
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <AssociationSet Name="FK_Data_Elev" Association="Self.FK_Data_Elev">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Data_Spil" Association="Self.FK_Data_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Niveau" Association="Self.FK_OpgaveSpil_Niveau">
+            <End Role="Niveau" EntitySet="Niveau" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpilNiveauer_Niveau" Association="Self.FK_SpilNiveauer_Niveau">
+            <End Role="Niveau" EntitySet="Niveau" />
+            <End Role="SpilNiveauer" EntitySet="SpilNiveauer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Spil" Association="Self.FK_OpgaveSpil_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Opgave" Association="Self.FK_OpgaveSpil_Opgave">
+            <End Role="Opgave" EntitySet="Opgave" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Fag" Association="Self.FK_Opgave_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Lærer" Association="Self.FK_Opgave_Lærer">
+            <End Role="Lærer" EntitySet="Lærer" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FagLærer" Association="Self.FagLærer">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Lærer" EntitySet="Lærer" />
+          </AssociationSet>
+          <AssociationSet Name="KlasseElever" Association="Self.KlasseElever">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="Klasse" EntitySet="Klasse" />
+          </AssociationSet>
+          <AssociationSet Name="KlasseLærer" Association="Self.KlasseLærer">
+            <End Role="Klasse" EntitySet="Klasse" />
+            <End Role="Lærer" EntitySet="Lærer" />
+          </AssociationSet>
+          <AssociationSet Name="OpgaveElever" Association="Self.OpgaveElever">
+            <End Role="Elev" EntitySet="Elev" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Learn_BasicModelStoreContainer" CdmEntityContainer="Learn_BasicEntities">
+          <EntitySetMapping Name="Data">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Data">
+              <MappingFragment StoreEntitySet="Data">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Tid" ColumnName="Tid" />
+                <ScalarProperty Name="ID_Spil" ColumnName="ID_Spil" />
+                <ScalarProperty Name="ID_Elev" ColumnName="ID_Elev" />
+                <ScalarProperty Name="ID_Gæst" ColumnName="ID_Gæst" />
+                <ScalarProperty Name="Dato" ColumnName="Dato" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Afsluttet" ColumnName="Afsluttet" />
+                <ScalarProperty Name="Hints" ColumnName="Hints" />
+                <ScalarProperty Name="LastCheckpoint" ColumnName="LastCheckpoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elev">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Elev">
+              <MappingFragment StoreEntitySet="Elev">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
+                <ScalarProperty Name="Efternavn" ColumnName="Efternavn" />
+                <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gæst">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Gæst">
+              <MappingFragment StoreEntitySet="Gæst">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Niveau">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Niveau">
+              <MappingFragment StoreEntitySet="Niveau">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Navn" ColumnName="Navn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spil">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Spil">
+              <MappingFragment StoreEntitySet="Spil">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpilNiveauer">
+            <EntityTypeMapping TypeName="Learn_BasicModel.SpilNiveauer">
+              <MappingFragment StoreEntitySet="SpilNiveauer">
+                <ScalarProperty Name="ID_Spil" ColumnName="ID_Spil" />
+                <ScalarProperty Name="ID_Niveau" ColumnName="ID_Niveau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OpgaveSpil">
+            <EntityTypeMapping TypeName="Learn_BasicModel.OpgaveSpil">
+              <MappingFragment StoreEntitySet="OpgaveSpil">
+                <ScalarProperty Name="ID_Opgave" ColumnName="ID_Opgave" />
+                <ScalarProperty Name="ID_Spil" ColumnName="ID_Spil" />
+                <ScalarProperty Name="ID_Niveau" ColumnName="ID_Niveau" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Learn_BasicModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Test">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fag">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Fag">
+              <MappingFragment StoreEntitySet="Fag">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Kategori" ColumnName="Kategori" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Klasse">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Klasse">
+              <MappingFragment StoreEntitySet="Klasse">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Navn" ColumnName="Navn" />
+                <ScalarProperty Name="Klassetrin" ColumnName="Klassetrin" />
+                <ScalarProperty Name="StartÅr" ColumnName="StartÅr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lærer">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Lærer">
+              <MappingFragment StoreEntitySet="Lærer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
+                <ScalarProperty Name="Efternavn" ColumnName="Efternavn" />
+                <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="Køn" ColumnName="Køn" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opgave">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Opgave">
+              <MappingFragment StoreEntitySet="Opgave">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Beskrivelse" ColumnName="Beskrivelse" />
+                <ScalarProperty Name="ID_Fag" ColumnName="ID_Fag" />
+                <ScalarProperty Name="ID_Lærer" ColumnName="ID_Lærer" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="Learn_BasicModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ipv6_database_firewall_rules">
+            <EntityTypeMapping TypeName="Learn_BasicModel.ipv6_database_firewall_rules">
+              <MappingFragment StoreEntitySet="ipv6_database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ipv6_address" ColumnName="start_ipv6_address" />
+                <ScalarProperty Name="end_ipv6_address" ColumnName="end_ipv6_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FagLærer" TypeName="Learn_BasicModel.FagLærer" StoreEntitySet="FagLærer">
+            <EndProperty Name="Fag">
+              <ScalarProperty Name="ID" ColumnName="ID_Fag" />
+            </EndProperty>
+            <EndProperty Name="Lærer">
+              <ScalarProperty Name="ID" ColumnName="ID_Lærer" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="KlasseElever" TypeName="Learn_BasicModel.KlasseElever" StoreEntitySet="KlasseElever">
+            <EndProperty Name="Elev">
+              <ScalarProperty Name="ID" ColumnName="ID_Elev" />
+            </EndProperty>
+            <EndProperty Name="Klasse">
+              <ScalarProperty Name="ID" ColumnName="ID_Klasse" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="KlasseLærer" TypeName="Learn_BasicModel.KlasseLærer" StoreEntitySet="KlasseLærer">
+            <EndProperty Name="Klasse">
+              <ScalarProperty Name="ID" ColumnName="ID_Klasse" />
+            </EndProperty>
+            <EndProperty Name="Lærer">
+              <ScalarProperty Name="ID" ColumnName="ID_Lærer" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="OpgaveElever" TypeName="Learn_BasicModel.OpgaveElever" StoreEntitySet="OpgaveElever">
+            <EndProperty Name="Elev">
+              <ScalarProperty Name="ID" ColumnName="ID_Elev" />
+            </EndProperty>
+            <EndProperty Name="Opgave">
+              <ScalarProperty Name="ID" ColumnName="ID_Opgave" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
