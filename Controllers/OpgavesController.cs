@@ -40,8 +40,24 @@ namespace BachelorWeb
         {
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title");
             ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn");
-            ViewBag.Spil = new SelectList(db.Spil, "ID", "Title");
+            ViewBag.ID_Spil = new SelectList(db.Spil, "ID", "Title");
+            ViewBag.ID_Klasse = new SelectList(db.Klasse, "ID", "Navn");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetNiveauer(int idDropDown)
+        {
+            var niveauer = (from sn in db.SpilNiveauer
+                      join n in db.Niveau on sn.ID_Niveau equals n.ID
+                      where sn.ID_Spil == idDropDown
+                      select new { 
+                          ID=n.ID,
+                          Navn = n.Navn
+                      }).ToArray();
+
+            return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
+
         }
 
         // POST: Opgaves/Create

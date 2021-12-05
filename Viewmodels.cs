@@ -15,7 +15,7 @@ namespace BachelorWeb
             public Nullable<int> ID_Lærer { get; set; }
             public Nullable<int> ID_Status { get; set; }
             public Nullable<int> ID_Klasse { get; set; }
-            public int ID_Spil { get; set; }
+            public List<int> ID_Spil { get; set; }
             public int ID_Niveau { get; set; }
             public Nullable<int> Order { get; set; }
         }
