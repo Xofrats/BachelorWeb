@@ -12,23 +12,18 @@ namespace BachelorWeb
     using System;
     using System.Collections.Generic;
     
-    public partial class Klasse
+    public partial class Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Klasse()
+        public Status()
         {
-            this.Elev = new HashSet<Elev>();
-            this.Lærer = new HashSet<Lærer>();
+            this.Opgave = new HashSet<Opgave>();
         }
     
         public int ID { get; set; }
-        public string Navn { get; set; }
-        public Nullable<int> Klassetrin { get; set; }
-        public Nullable<int> StartÅr { get; set; }
+        public string Title { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Elev> Elev { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lærer> Lærer { get; set; }
+        public virtual ICollection<Opgave> Opgave { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace BachelorWeb
         {
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title");
             ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn");
+            ViewBag.Spil = new SelectList(db.Spil, "ID", "Title");
             return View();
         }
 

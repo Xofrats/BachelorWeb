@@ -17,8 +17,8 @@ namespace BachelorWeb
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Fag()
         {
-            this.Opgave = new HashSet<Opgave>();
             this.Lærer = new HashSet<Lærer>();
+            this.Opgave = new HashSet<Opgave>();
         }
     
         public int ID { get; set; }
@@ -26,8 +26,8 @@ namespace BachelorWeb
         public string Kategori { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Opgave> Opgave { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lærer> Lærer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opgave> Opgave { get; set; }
     }
 }
