@@ -52,6 +52,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Fag" Type="int" />
         </EntityType>
         <EntityType Name="SpilNiveauer">
           <Key>
@@ -93,7 +94,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="10" />
+          <Property Name="Title" Type="nvarchar" MaxLength="25" />
           <Property Name="Kategori" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="FagLærer">
@@ -153,14 +154,6 @@
           <Property Name="ID_Status" Type="int" />
           <Property Name="ID_Klasse" Type="int" />
         </EntityType>
-        <EntityType Name="OpgaveElever">
-          <Key>
-            <PropertyRef Name="ID_Opgave" />
-            <PropertyRef Name="ID_Elev" />
-          </Key>
-          <Property Name="ID_Opgave" Type="int" Nullable="false" />
-          <Property Name="ID_Elev" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="ID" />
@@ -168,13 +161,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Learn_Basic.Both.Highscore' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Highscore">
-          <Property Name="Score" Type="int" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="rn" Type="bigint" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Learn_Basic.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="database_firewall_rules">
@@ -329,6 +315,18 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Opgave_Klasse">
+          <End Role="Klasse" Type="Self.Klasse" Multiplicity="0..1" />
+          <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klasse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Opgave_Lærer">
           <End Role="Lærer" Type="Self.Lærer" Multiplicity="0..1" />
           <End Role="Opgave" Type="Self.Opgave" Multiplicity="*" />
@@ -350,30 +348,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Principal>
             <Dependent Role="Opgave">
               <PropertyRef Name="ID_Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OpgaveElever_Elev">
-          <End Role="Elev" Type="Self.Elev" Multiplicity="1" />
-          <End Role="OpgaveElever" Type="Self.OpgaveElever" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Elev">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OpgaveElever">
-              <PropertyRef Name="ID_Elev" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OpgaveElever_Opgave">
-          <End Role="Opgave" Type="Self.Opgave" Multiplicity="1" />
-          <End Role="OpgaveElever" Type="Self.OpgaveElever" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Opgave">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OpgaveElever">
-              <PropertyRef Name="ID_Opgave" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -410,6 +384,18 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Principal>
             <Dependent Role="OpgaveSpil">
               <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Spil_Fag">
+          <End Role="Fag" Type="Self.Fag" Multiplicity="0..1" />
+          <End Role="Spil" Type="Self.Spil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Spil">
+              <PropertyRef Name="ID_Fag" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -473,7 +459,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <EntitySet Name="KlasseLærer" EntityType="Self.KlasseLærer" Schema="Web" store:Type="Tables" />
           <EntitySet Name="Lærer" EntityType="Self.Lærer" Schema="Web" store:Type="Tables" />
           <EntitySet Name="Opgave" EntityType="Self.Opgave" Schema="Web" store:Type="Tables" />
-          <EntitySet Name="OpgaveElever" EntityType="Self.OpgaveElever" Schema="Web" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="Web" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
@@ -538,6 +523,10 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             <End Role="Fag" EntitySet="Fag" />
             <End Role="Opgave" EntitySet="Opgave" />
           </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Klasse" Association="Self.FK_Opgave_Klasse">
+            <End Role="Klasse" EntitySet="Klasse" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
           <AssociationSet Name="FK_Opgave_Lærer" Association="Self.FK_Opgave_Lærer">
             <End Role="Lærer" EntitySet="Lærer" />
             <End Role="Opgave" EntitySet="Opgave" />
@@ -545,14 +534,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <AssociationSet Name="FK_Opgave_Status" Association="Self.FK_Opgave_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="Opgave" EntitySet="Opgave" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OpgaveElever_Elev" Association="Self.FK_OpgaveElever_Elev">
-            <End Role="Elev" EntitySet="Elev" />
-            <End Role="OpgaveElever" EntitySet="OpgaveElever" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OpgaveElever_Opgave" Association="Self.FK_OpgaveElever_Opgave">
-            <End Role="Opgave" EntitySet="Opgave" />
-            <End Role="OpgaveElever" EntitySet="OpgaveElever" />
           </AssociationSet>
           <AssociationSet Name="FK_OpgaveSpil_Niveau" Association="Self.FK_OpgaveSpil_Niveau">
             <End Role="Niveau" EntitySet="Niveau" />
@@ -565,6 +546,10 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <AssociationSet Name="FK_OpgaveSpil_Spil" Association="Self.FK_OpgaveSpil_Spil">
             <End Role="Spil" EntitySet="Spil" />
             <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Spil_Fag" Association="Self.FK_Spil_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Spil" EntitySet="Spil" />
           </AssociationSet>
           <AssociationSet Name="FK_SpilNiveauer_Niveau" Association="Self.FK_SpilNiveauer_Niveau">
             <End Role="Niveau" EntitySet="Niveau" />
@@ -590,7 +575,7 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="Hints" Type="Int32" />
           <Property Name="LastCheckpoint" Type="Int32" />
           <NavigationProperty Name="Elev" Relationship="Self.FK_Data_Elev" FromRole="Data" ToRole="Elev" />
-          <NavigationProperty Name="Spil" Relationship="Self.FK_Data_Spil" FromRole="Data" ToRole="Spil" />
+          <NavigationProperty Name="Spil" Relationship="Learn_BasicModel.FK_Data_Spil" FromRole="Data" ToRole="Spil" />
         </EntityType>
         <EntityType Name="Elev">
           <Key>
@@ -604,7 +589,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Data" Relationship="Self.FK_Data_Elev" FromRole="Elev" ToRole="Data" />
           <NavigationProperty Name="Klasse" Relationship="Learn_BasicModel.KlasseElever" FromRole="Elev" ToRole="Klasse" />
-          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.OpgaveElever" FromRole="Elev" ToRole="Opgave" />
         </EntityType>
         <EntityType Name="Gæst">
           <Key>
@@ -622,15 +606,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="Navn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OpgaveSpil" Relationship="Self.FK_OpgaveSpil_Niveau" FromRole="Niveau" ToRole="OpgaveSpil" />
           <NavigationProperty Name="SpilNiveauer" Relationship="Self.FK_SpilNiveauer_Niveau" FromRole="Niveau" ToRole="SpilNiveauer" />
-        </EntityType>
-        <EntityType Name="Spil">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Data" Relationship="Self.FK_Data_Spil" FromRole="Spil" ToRole="Data" />
-          <NavigationProperty Name="OpgaveSpil" Relationship="Self.FK_OpgaveSpil_Spil" FromRole="Spil" ToRole="OpgaveSpil" />
         </EntityType>
         <EntityType Name="SpilNiveauer">
           <Key>
@@ -651,8 +626,8 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="ID_Niveau" Type="Int32" Nullable="false" />
           <Property Name="Order" Type="Int32" />
           <NavigationProperty Name="Niveau" Relationship="Self.FK_OpgaveSpil_Niveau" FromRole="OpgaveSpil" ToRole="Niveau" />
-          <NavigationProperty Name="Spil" Relationship="Self.FK_OpgaveSpil_Spil" FromRole="OpgaveSpil" ToRole="Spil" />
           <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_OpgaveSpil_Opgave" FromRole="OpgaveSpil" ToRole="Opgave" />
+          <NavigationProperty Name="Spil" Relationship="Learn_BasicModel.FK_OpgaveSpil_Spil" FromRole="OpgaveSpil" ToRole="Spil" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -676,10 +651,11 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="Kategori" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Lærer" Relationship="Self.FagLærer" FromRole="Fag" ToRole="Lærer" />
           <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Fag" FromRole="Fag" ToRole="Opgave" />
+          <NavigationProperty Name="Spil" Relationship="Learn_BasicModel.FK_Spil_Fag" FromRole="Fag" ToRole="Spil" />
         </EntityType>
         <EntityType Name="Lærer">
           <Key>
@@ -693,8 +669,8 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Fag" Relationship="Self.FagLærer" FromRole="Lærer" ToRole="Fag" />
-          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Lærer" FromRole="Lærer" ToRole="Opgave" />
           <NavigationProperty Name="Klasse" Relationship="Learn_BasicModel.KlasseLærer" FromRole="Lærer" ToRole="Klasse" />
+          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Lærer" FromRole="Lærer" ToRole="Opgave" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -748,18 +724,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Data_Spil">
-          <End Role="Spil" Type="Self.Spil" Multiplicity="0..1" />
-          <End Role="Data" Type="Self.Data" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Spil">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Data">
-              <PropertyRef Name="ID_Spil" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OpgaveSpil_Niveau">
           <End Role="Niveau" Type="Self.Niveau" Multiplicity="1" />
           <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
@@ -784,18 +748,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OpgaveSpil_Spil">
-          <End Role="Spil" Type="Self.Spil" Multiplicity="1" />
-          <End Role="OpgaveSpil" Type="Self.OpgaveSpil" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Spil">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OpgaveSpil">
-              <PropertyRef Name="ID_Spil" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FagLærer">
           <End Role="Fag" Type="Self.Fag" Multiplicity="*" />
           <End Role="Lærer" Type="Self.Lærer" Multiplicity="*" />
@@ -805,7 +757,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <EntitySet Name="Elev" EntityType="Self.Elev" />
           <EntitySet Name="Gæst" EntityType="Self.Gæst" />
           <EntitySet Name="Niveau" EntityType="Self.Niveau" />
-          <EntitySet Name="Spil" EntityType="Self.Spil" />
           <EntitySet Name="SpilNiveauer" EntityType="Self.SpilNiveauer" />
           <EntitySet Name="OpgaveSpil" EntityType="Self.OpgaveSpil" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
@@ -819,10 +770,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             <End Role="Elev" EntitySet="Elev" />
             <End Role="Data" EntitySet="Data" />
           </AssociationSet>
-          <AssociationSet Name="FK_Data_Spil" Association="Self.FK_Data_Spil">
-            <End Role="Spil" EntitySet="Spil" />
-            <End Role="Data" EntitySet="Data" />
-          </AssociationSet>
           <AssociationSet Name="FK_OpgaveSpil_Niveau" Association="Self.FK_OpgaveSpil_Niveau">
             <End Role="Niveau" EntitySet="Niveau" />
             <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
@@ -831,33 +778,12 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             <End Role="Niveau" EntitySet="Niveau" />
             <End Role="SpilNiveauer" EntitySet="SpilNiveauer" />
           </AssociationSet>
-          <AssociationSet Name="FK_OpgaveSpil_Spil" Association="Self.FK_OpgaveSpil_Spil">
-            <End Role="Spil" EntitySet="Spil" />
-            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
-          </AssociationSet>
           <AssociationSet Name="FagLærer" Association="Self.FagLærer">
             <End Role="Fag" EntitySet="Fag" />
             <End Role="Lærer" EntitySet="Lærer" />
           </AssociationSet>
           <EntitySet Name="Klasse" EntityType="Learn_BasicModel.Klasse" />
-          <EntitySet Name="Opgave" EntityType="Learn_BasicModel.Opgave" />
           <EntitySet Name="Status" EntityType="Learn_BasicModel.Status" />
-          <AssociationSet Name="FK_OpgaveSpil_Opgave" Association="Learn_BasicModel.FK_OpgaveSpil_Opgave">
-            <End Role="Opgave" EntitySet="Opgave" />
-            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Opgave_Fag" Association="Learn_BasicModel.FK_Opgave_Fag">
-            <End Role="Fag" EntitySet="Fag" />
-            <End Role="Opgave" EntitySet="Opgave" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Opgave_Lærer" Association="Learn_BasicModel.FK_Opgave_Lærer">
-            <End Role="Lærer" EntitySet="Lærer" />
-            <End Role="Opgave" EntitySet="Opgave" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Opgave_Status" Association="Learn_BasicModel.FK_Opgave_Status">
-            <End Role="Status" EntitySet="Status" />
-            <End Role="Opgave" EntitySet="Opgave" />
-          </AssociationSet>
           <AssociationSet Name="KlasseElever" Association="Learn_BasicModel.KlasseElever">
             <End Role="Elev" EntitySet="Elev" />
             <End Role="Klasse" EntitySet="Klasse" />
@@ -865,10 +791,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <AssociationSet Name="KlasseLærer" Association="Learn_BasicModel.KlasseLærer">
             <End Role="Klasse" EntitySet="Klasse" />
             <End Role="Lærer" EntitySet="Lærer" />
-          </AssociationSet>
-          <AssociationSet Name="OpgaveElever" Association="Learn_BasicModel.OpgaveElever">
-            <End Role="Elev" EntitySet="Elev" />
-            <End Role="Opgave" EntitySet="Opgave" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -900,6 +822,40 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Opgave" EntityType="Learn_BasicModel.Opgave" />
+          <AssociationSet Name="FK_OpgaveSpil_Opgave" Association="Learn_BasicModel.FK_OpgaveSpil_Opgave">
+            <End Role="Opgave" EntitySet="Opgave" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Fag" Association="Learn_BasicModel.FK_Opgave_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Klasse" Association="Learn_BasicModel.FK_Opgave_Klasse">
+            <End Role="Klasse" EntitySet="Klasse" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Lærer" Association="Learn_BasicModel.FK_Opgave_Lærer">
+            <End Role="Lærer" EntitySet="Lærer" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opgave_Status" Association="Learn_BasicModel.FK_Opgave_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Opgave" EntitySet="Opgave" />
+          </AssociationSet>
+          <EntitySet Name="Spil" EntityType="Learn_BasicModel.Spil" />
+          <AssociationSet Name="FK_Data_Spil" Association="Learn_BasicModel.FK_Data_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="Data" EntitySet="Data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpgaveSpil_Spil" Association="Learn_BasicModel.FK_OpgaveSpil_Spil">
+            <End Role="Spil" EntitySet="Spil" />
+            <End Role="OpgaveSpil" EntitySet="OpgaveSpil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Spil_Fag" Association="Learn_BasicModel.FK_Spil_Fag">
+            <End Role="Fag" EntitySet="Fag" />
+            <End Role="Spil" EntitySet="Spil" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Klasse">
           <Key>
@@ -911,7 +867,35 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="StartÅr" Type="Int32" />
           <NavigationProperty Name="Elev" Relationship="Learn_BasicModel.KlasseElever" FromRole="Klasse" ToRole="Elev" />
           <NavigationProperty Name="Lærer" Relationship="Learn_BasicModel.KlasseLærer" FromRole="Klasse" ToRole="Lærer" />
+          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Klasse" FromRole="Klasse" ToRole="Opgave" />
         </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Status" FromRole="Status" ToRole="Opgave" />
+        </EntityType>
+        <Association Name="KlasseElever">
+          <End Type="Learn_BasicModel.Elev" Role="Elev" Multiplicity="*" />
+          <End Type="Learn_BasicModel.Klasse" Role="Klasse" Multiplicity="*" />
+        </Association>
+        <Association Name="KlasseLærer">
+          <End Type="Learn_BasicModel.Klasse" Role="Klasse" Multiplicity="*" />
+          <End Type="Learn_BasicModel.Lærer" Role="Lærer" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         <EntityType Name="Opgave">
           <Key>
             <PropertyRef Name="ID" />
@@ -925,17 +909,9 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           <Property Name="ID_Klasse" Type="Int32" />
           <NavigationProperty Name="OpgaveSpil" Relationship="Learn_BasicModel.FK_OpgaveSpil_Opgave" FromRole="Opgave" ToRole="OpgaveSpil" />
           <NavigationProperty Name="Fag" Relationship="Learn_BasicModel.FK_Opgave_Fag" FromRole="Opgave" ToRole="Fag" />
+          <NavigationProperty Name="Klasse" Relationship="Learn_BasicModel.FK_Opgave_Klasse" FromRole="Opgave" ToRole="Klasse" />
           <NavigationProperty Name="Lærer" Relationship="Learn_BasicModel.FK_Opgave_Lærer" FromRole="Opgave" ToRole="Lærer" />
           <NavigationProperty Name="Status" Relationship="Learn_BasicModel.FK_Opgave_Status" FromRole="Opgave" ToRole="Status" />
-          <NavigationProperty Name="Elev" Relationship="Learn_BasicModel.OpgaveElever" FromRole="Opgave" ToRole="Elev" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Opgave" Relationship="Learn_BasicModel.FK_Opgave_Status" FromRole="Status" ToRole="Opgave" />
         </EntityType>
         <Association Name="FK_OpgaveSpil_Opgave">
           <End Type="Learn_BasicModel.Opgave" Role="Opgave" Multiplicity="1" />
@@ -958,6 +934,18 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Principal>
             <Dependent Role="Opgave">
               <PropertyRef Name="ID_Fag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opgave_Klasse">
+          <End Type="Learn_BasicModel.Klasse" Role="Klasse" Multiplicity="0..1" />
+          <End Type="Learn_BasicModel.Opgave" Role="Opgave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klasse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Opgave">
+              <PropertyRef Name="ID_Klasse" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -985,29 +973,53 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="KlasseElever">
-          <End Type="Learn_BasicModel.Elev" Role="Elev" Multiplicity="*" />
-          <End Type="Learn_BasicModel.Klasse" Role="Klasse" Multiplicity="*" />
+        <EntityType Name="Spil">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Fag" Type="Int32" />
+          <NavigationProperty Name="Data" Relationship="Learn_BasicModel.FK_Data_Spil" FromRole="Spil" ToRole="Data" />
+          <NavigationProperty Name="OpgaveSpil" Relationship="Learn_BasicModel.FK_OpgaveSpil_Spil" FromRole="Spil" ToRole="OpgaveSpil" />
+          <NavigationProperty Name="Fag" Relationship="Learn_BasicModel.FK_Spil_Fag" FromRole="Spil" ToRole="Fag" />
+        </EntityType>
+        <Association Name="FK_Data_Spil">
+          <End Type="Learn_BasicModel.Spil" Role="Spil" Multiplicity="0..1" />
+          <End Type="Learn_BasicModel.Data" Role="Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Data">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="KlasseLærer">
-          <End Type="Learn_BasicModel.Klasse" Role="Klasse" Multiplicity="*" />
-          <End Type="Learn_BasicModel.Lærer" Role="Lærer" Multiplicity="*" />
+        <Association Name="FK_OpgaveSpil_Spil">
+          <End Type="Learn_BasicModel.Spil" Role="Spil" Multiplicity="1" />
+          <End Type="Learn_BasicModel.OpgaveSpil" Role="OpgaveSpil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spil">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpgaveSpil">
+              <PropertyRef Name="ID_Spil" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="OpgaveElever">
-          <End Type="Learn_BasicModel.Elev" Role="Elev" Multiplicity="*" />
-          <End Type="Learn_BasicModel.Opgave" Role="Opgave" Multiplicity="*" />
+        <Association Name="FK_Spil_Fag">
+          <End Type="Learn_BasicModel.Fag" Role="Fag" Multiplicity="0..1" />
+          <End Type="Learn_BasicModel.Spil" Role="Spil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Spil">
+              <PropertyRef Name="ID_Fag" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1056,14 +1068,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
               <MappingFragment StoreEntitySet="Niveau">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Navn" ColumnName="Navn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Spil">
-            <EntityTypeMapping TypeName="Learn_BasicModel.Spil">
-              <MappingFragment StoreEntitySet="Spil">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1177,19 +1181,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Opgave">
-            <EntityTypeMapping TypeName="Learn_BasicModel.Opgave">
-              <MappingFragment StoreEntitySet="Opgave">
-                <ScalarProperty Name="ID_Klasse" ColumnName="ID_Klasse" />
-                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
-                <ScalarProperty Name="ID_Lærer" ColumnName="ID_Lærer" />
-                <ScalarProperty Name="ID_Fag" ColumnName="ID_Fag" />
-                <ScalarProperty Name="Beskrivelse" ColumnName="Beskrivelse" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="Learn_BasicModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -1212,14 +1203,6 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
             </EndProperty>
             <EndProperty Name="Klasse">
               <ScalarProperty Name="ID" ColumnName="ID_Klasse" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="OpgaveElever" TypeName="Learn_BasicModel.OpgaveElever" StoreEntitySet="OpgaveElever">
-            <EndProperty Name="Opgave">
-              <ScalarProperty Name="ID" ColumnName="ID_Opgave" />
-            </EndProperty>
-            <EndProperty Name="Elev">
-              <ScalarProperty Name="ID" ColumnName="ID_Elev" />
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Learn_BasicModel.Store.sp_alterdiagram" />
@@ -1246,6 +1229,28 @@ warning 6002: The table/view 'Learn_Basic.VR.Login' does not have a primary key 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Learn_BasicModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Learn_BasicModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Opgave">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Opgave">
+              <MappingFragment StoreEntitySet="Opgave">
+                <ScalarProperty Name="ID_Klasse" ColumnName="ID_Klasse" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="ID_Lærer" ColumnName="ID_Lærer" />
+                <ScalarProperty Name="ID_Fag" ColumnName="ID_Fag" />
+                <ScalarProperty Name="Beskrivelse" ColumnName="Beskrivelse" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spil">
+            <EntityTypeMapping TypeName="Learn_BasicModel.Spil">
+              <MappingFragment StoreEntitySet="Spil">
+                <ScalarProperty Name="ID_Fag" ColumnName="ID_Fag" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

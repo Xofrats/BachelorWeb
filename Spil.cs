@@ -23,10 +23,12 @@ namespace BachelorWeb
     
         public int ID { get; set; }
         public string Title { get; set; }
+        public Nullable<int> ID_Fag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Data> Data { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpgaveSpil> OpgaveSpil { get; set; }
+        public virtual Fag Fag { get; set; }
     }
 }

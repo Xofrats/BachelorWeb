@@ -7,34 +7,35 @@
       <Diagram DiagramId="a82aad9ee03f4df5949275b76b2346ea" Name="Diagram1">
         <EntityTypeShape EntityType="Learn_BasicModel.Data" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Elev" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Gæst" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Gæst" Width="1.5" PointX="5.375" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Niveau" Width="1.5" PointX="7.5" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Spil" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.SpilNiveauer" Width="1.5" PointX="9.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.OpgaveSpil" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Test" Width="1.5" PointX="2.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Fag" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.sysdiagrams" Width="1.5" PointX="13.625" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Test" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Fag" Width="1.5" PointX="4.875" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Lærer" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.database_firewall_rules" Width="1.5" PointX="11.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.ipv6_database_firewall_rules" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Login" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.database_firewall_rules" Width="1.5" PointX="11.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.ipv6_database_firewall_rules" Width="1.5" PointX="13.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Login" Width="1.5" PointX="10.125" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="Learn_BasicModel.FK_Data_Elev" ManuallyRouted="false" />
-        <AssociationConnector Association="Learn_BasicModel.FK_Data_Spil" ManuallyRouted="false" />
         <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Niveau" ManuallyRouted="false" />
         <AssociationConnector Association="Learn_BasicModel.FK_SpilNiveauer_Niveau" ManuallyRouted="false" />
-        <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Spil" ManuallyRouted="false" />
         <AssociationConnector Association="Learn_BasicModel.FagLærer" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Learn_BasicModel.Klasse" Width="1.5" PointX="3" PointY="8.5" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Opgave" Width="1.5" PointX="7.5" PointY="6.375" />
         <EntityTypeShape EntityType="Learn_BasicModel.Status" Width="1.5" PointX="5.25" PointY="5.25" />
-        <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Opgave" />
-        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Fag" />
-        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Lærer" />
-        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Status" />
         <AssociationConnector Association="Learn_BasicModel.KlasseElever" />
         <AssociationConnector Association="Learn_BasicModel.KlasseLærer" />
-        <AssociationConnector Association="Learn_BasicModel.OpgaveElever" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Opgave" Width="1.5" PointX="7.5" PointY="7.875" />
+        <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Opgave" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Fag" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Klasse" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Lærer" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Status" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Spil" Width="1.5" PointX="11.625" PointY="11.25" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Data_Spil" />
+        <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Spil" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Spil_Fag" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,7 +31,6 @@ namespace BachelorWeb
         public virtual DbSet<Elev> Elev { get; set; }
         public virtual DbSet<Gæst> Gæst { get; set; }
         public virtual DbSet<Niveau> Niveau { get; set; }
-        public virtual DbSet<Spil> Spil { get; set; }
         public virtual DbSet<SpilNiveauer> SpilNiveauer { get; set; }
         public virtual DbSet<OpgaveSpil> OpgaveSpil { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
@@ -42,8 +41,9 @@ namespace BachelorWeb
         public virtual DbSet<ipv6_database_firewall_rules> ipv6_database_firewall_rules { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<Klasse> Klasse { get; set; }
-        public virtual DbSet<Opgave> Opgave { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Opgave> Opgave { get; set; }
+        public virtual DbSet<Spil> Spil { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

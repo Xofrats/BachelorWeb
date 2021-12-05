@@ -5,54 +5,52 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Oversigt over opgaver</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="button" value="Create" onclick="location.href='@Url.Action("Opret opgave", "Create" )'" />
 </p>
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Status.Title)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Beskrivelse)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Fag.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lærer.Fornavn)
+            @Html.DisplayNameFor(model => model.Klasse.Navn)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Beskrivelse)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fag.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lærer.Fornavn)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Fag.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Klasse.Navn)
+    </td>
+    <td>
+        @Html.ActionLink("Ændre", "Edit", new { id = item.ID }) |
+        @Html.ActionLink("Detaljer", "Details", new { id = item.ID }) |
+
+        @if (item.Status.ID == 2)
+        {
+            @Html.ActionLink("Afslut", "Afslut", new { id = item.ID })
+        }
+
+    </td>
+</tr>
 }
 
 </table>

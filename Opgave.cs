@@ -18,7 +18,6 @@ namespace BachelorWeb
         public Opgave()
         {
             this.OpgaveSpil = new HashSet<OpgaveSpil>();
-            this.Elev = new HashSet<Elev>();
         }
     
         public int ID { get; set; }
@@ -32,9 +31,8 @@ namespace BachelorWeb
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpgaveSpil> OpgaveSpil { get; set; }
         public virtual Fag Fag { get; set; }
+        public virtual Klasse Klasse { get; set; }
         public virtual Lærer Lærer { get; set; }
         public virtual Status Status { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Elev> Elev { get; set; }
     }
 }

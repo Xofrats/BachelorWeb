@@ -36,7 +36,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ID_Fag, "Fag", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("ID_Fag", null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("ID_Fag", null, "Alle fag",  htmlAttributes: new { @class = "form-control", @onchange = "OpdatererSpil(this.value)" })
             @Html.ValidationMessageFor(model => model.ID_Fag, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -44,7 +44,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ID_Spil, "Tilføj Spil", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("ID_Spil", null, "Vælg Spil", htmlAttributes: new { @class = "form-control", @onchange = "OpdatererNiveau(this.value)" } )
+            @Html.DropDownList("ID_Spil", Enumerable.Empty<SelectListItem>(), "Vælg Spil", htmlAttributes: new { @ID = "Spil",@class = "form-control", @onchange = "OpdatererNiveau(this.value)" } )
             @Html.ValidationMessageFor(model => model.ID_Spil, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -103,7 +103,33 @@
         var dropdown = document.getElementById("Niveauer");
         var option = document.createElement("option");
 
-        console.log(data)
+        option.text = data.Navn;
+        option.value = data.ID;
+        dropdown.options.add(option);
+    }
+
+    function OpdatererSpil(val) {
+        var dropdown = document.getElementById("Spil");
+        dropdown.options.length = 0;
+
+        $.ajax({
+            type: "POST",
+            url: 'GetSpil',
+            data: { idDropDown: val },
+            success: function (data) {
+                data.List.forEach(element => makeOptionsSpil(element))
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.responseText);
+
+            }
+        })
+    }
+
+    function makeOptionsSpil(data) {
+        var dropdown = document.getElementById("Spil");
+
+        var option = document.createElement("option");
 
         option.text = data.Navn;
         option.value = data.ID;

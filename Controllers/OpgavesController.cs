@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using static BachelorWeb.Viewmodels;
 
 namespace BachelorWeb
 {
@@ -39,8 +40,6 @@ namespace BachelorWeb
         public ActionResult Create()
         {
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title");
-            ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn");
-            ViewBag.ID_Spil = new SelectList(db.Spil, "ID", "Title");
             ViewBag.ID_Klasse = new SelectList(db.Klasse, "ID", "Navn");
             return View();
         }
@@ -60,28 +59,72 @@ namespace BachelorWeb
 
         }
 
+        [HttpPost]
+        public ActionResult GetSpil(int? idDropDown)
+        {
+            if (idDropDown != null)
+            {
+                var niveauer = (from s in db.Spil
+                                join f in db.Fag on s.ID_Fag equals f.ID
+                                where f.ID == idDropDown
+                                select new
+                                {
+                                    ID = s.ID,
+                                    Navn = s.Title
+                                }).ToArray();
+
+                return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
+            } else
+            {
+                var niveauer = (from s in db.Spil
+                                join f in db.Fag on s.ID_Fag equals f.ID
+                                select new
+                                {
+                                    ID = f.ID,
+                                    Navn = f.Title
+                                }).ToArray();
+
+                return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // POST: Opgaves/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Beskrivelse,ID_Fag,ID_Lærer,Status")] Opgave opgave)
+        public ActionResult Create([Bind(Include = "Title,Beskrivelse,ID_Fag,ID_Spil,ID_Niveau,ID_Klasse,Status")] VMOpgaveSpil form)
         {
-            if (ModelState.IsValid)
+            int ID = (int)Session["Userid"];
+            Opgave opgave = new Opgave();
+
+            opgave.Title = form.Title;
+            opgave.Beskrivelse = form.Beskrivelse;
+            opgave.ID_Fag = form.ID_Fag;
+            opgave.ID_Lærer = ID;
+            opgave.ID_Status = 2;
+            opgave.ID_Klasse = form.ID_Klasse;
+
+            db.Opgave.Add(opgave);
+            db.SaveChanges();
+
+            for(int i = 0; i < form.ID_Spil.Count(); i++)
             {
-                db.Opgave.Add(opgave);
+                OpgaveSpil os = new OpgaveSpil();
+                os.ID_Opgave = opgave.ID;
+                os.ID_Spil = form.ID_Spil[i];
+                os.ID_Niveau = form.ID_Spil[i];
+                os.Order = i + 1;
+
+                db.OpgaveSpil.Add(os);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title", opgave.ID_Fag);
-            ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn", opgave.ID_Lærer);
-            return View(opgave);
+            return RedirectToAction("Index");
         }
 
         // GET: Opgaves/Edit/5
         public ActionResult Edit(int? id)
         {
+            VMOpgaveSpil opgaveVM = new VMOpgaveSpil();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -91,9 +134,20 @@ namespace BachelorWeb
             {
                 return HttpNotFound();
             }
+
+            List<OpgaveSpil> OS = db.OpgaveSpil.Where(o => o.ID_Opgave == id).ToList();
+
+            opgaveVM.Title = opgave.Title;
+            opgaveVM.Beskrivelse = opgave.Beskrivelse;
+            opgaveVM.ID_Fag = opgave.ID_Fag;
+            opgaveVM.ID_Klasse = opgave.ID_Klasse;
+
+            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Spil));
+            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Niveau));
+
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title", opgave.ID_Fag);
-            ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn", opgave.ID_Lærer);
-            return View(opgave);
+            ViewBag.Klasse = new SelectList(db.Klasse, "ID", "Navn", opgave.ID_Klasse);
+            return View(opgaveVM);
         }
 
         // POST: Opgaves/Edit/5
@@ -111,32 +165,24 @@ namespace BachelorWeb
             }
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title", opgave.ID_Fag);
             ViewBag.ID_Lærer = new SelectList(db.Lærer, "ID", "Fornavn", opgave.ID_Lærer);
+
             return View(opgave);
         }
 
-        // GET: Opgaves/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Afslut(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Opgave opgave = db.Opgave.Find(id);
             if (opgave == null)
             {
                 return HttpNotFound();
-            }
-            return View(opgave);
-        }
+            } else
+            {
+                opgave.ID_Status = 3;
+                db.SaveChanges();
 
-        // POST: Opgaves/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Opgave opgave = db.Opgave.Find(id);
-            db.Opgave.Remove(opgave);
-            db.SaveChanges();
+            }
+
+
             return RedirectToAction("Index");
         }
 

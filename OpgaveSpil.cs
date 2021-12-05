@@ -20,7 +20,7 @@ namespace BachelorWeb
         public Nullable<int> Order { get; set; }
     
         public virtual Niveau Niveau { get; set; }
-        public virtual Spil Spil { get; set; }
         public virtual Opgave Opgave { get; set; }
+        public virtual Spil Spil { get; set; }
     }
 }

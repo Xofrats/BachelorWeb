@@ -18,8 +18,8 @@ namespace BachelorWeb
         public Lærer()
         {
             this.Fag = new HashSet<Fag>();
-            this.Opgave = new HashSet<Opgave>();
             this.Klasse = new HashSet<Klasse>();
+            this.Opgave = new HashSet<Opgave>();
         }
     
         public int ID { get; set; }
@@ -33,8 +33,8 @@ namespace BachelorWeb
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fag> Fag { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Opgave> Opgave { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Klasse> Klasse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opgave> Opgave { get; set; }
     }
 }
