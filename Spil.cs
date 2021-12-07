@@ -17,8 +17,8 @@ namespace BachelorWeb
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Spil()
         {
-            this.Data = new HashSet<Data>();
             this.OpgaveSpil = new HashSet<OpgaveSpil>();
+            this.Data = new HashSet<Data>();
         }
     
         public int ID { get; set; }
@@ -26,9 +26,9 @@ namespace BachelorWeb
         public Nullable<int> ID_Fag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Data> Data { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpgaveSpil> OpgaveSpil { get; set; }
         public virtual Fag Fag { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Data> Data { get; set; }
     }
 }

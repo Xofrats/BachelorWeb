@@ -49,6 +49,11 @@
             @Html.ActionLink("Afslut", "Afslut", new { id = item.ID })
         }
 
+        @if (item.Status.ID == 3)
+        {
+            @Html.ActionLink("Resultat", "Result", new { id = item.ID })
+        }
+
     </td>
 </tr>
 }

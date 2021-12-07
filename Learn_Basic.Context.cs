@@ -27,7 +27,6 @@ namespace BachelorWeb
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Data> Data { get; set; }
         public virtual DbSet<Elev> Elev { get; set; }
         public virtual DbSet<Gæst> Gæst { get; set; }
         public virtual DbSet<Niveau> Niveau { get; set; }
@@ -44,6 +43,7 @@ namespace BachelorWeb
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Opgave> Opgave { get; set; }
         public virtual DbSet<Spil> Spil { get; set; }
+        public virtual DbSet<Data> Data { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

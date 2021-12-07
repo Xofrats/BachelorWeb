@@ -1,0 +1,21 @@
+﻿@model BachelorWeb.Viewmodels.VMOpgaveSpil
+
+@{
+    ViewBag.Title = "Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Result</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Opgave resultat</title>
+</head>
+<body>
+    <h1>Resultatet af opgave @Model.Title</h1>
+    <p>
+        <img src="@Url.Action("BarChart")" alt="Chart" />
+    </p>
+</body>
+</html>

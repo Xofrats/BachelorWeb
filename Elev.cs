@@ -17,8 +17,8 @@ namespace BachelorWeb
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Elev()
         {
-            this.Data = new HashSet<Data>();
             this.Klasse = new HashSet<Klasse>();
+            this.Data = new HashSet<Data>();
         }
     
         public int ID { get; set; }
@@ -29,8 +29,8 @@ namespace BachelorWeb
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Data> Data { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Klasse> Klasse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Data> Data { get; set; }
     }
 }

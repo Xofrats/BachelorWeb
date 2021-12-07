@@ -61,6 +61,18 @@
       <HintPath>packages\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Syncfusion.Chart.Base, Version=19.3460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Chart.Base.19.3.0.56\lib\net46\Syncfusion.Chart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grouping.Base, Version=19.3460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Grouping.Base.19.3.0.56\lib\net46\Syncfusion.Grouping.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.3460.0.56, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Licensing.19.3.0.56\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=19.3460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Shared.Base.19.3.0.56\lib\net46\Syncfusion.Shared.Base.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -179,6 +191,7 @@
     <Compile Include="Lærer.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BarChartModel.cs" />
     <Compile Include="Niveau.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
@@ -240,6 +253,7 @@
     <Content Include="Learn_Basic.edmx.diagram">
       <DependentUpon>Learn_Basic.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\WebVRLearn20211022181246 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -265,15 +279,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Opgaves\Create.cshtml" />
-    <Content Include="Views\Opgaves\Delete.cshtml" />
     <Content Include="Views\Opgaves\Details.cshtml" />
     <Content Include="Views\Opgaves\Edit.cshtml" />
     <Content Include="Views\Opgaves\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Opgaves\Result.cshtml" />
+    <Content Include="Views\Opgaves\BarChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Chart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

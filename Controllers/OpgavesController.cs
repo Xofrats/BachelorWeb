@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BachelorWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -184,6 +185,60 @@ namespace BachelorWeb
 
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Result(int id)
+        {
+            VMOpgaveSpil opgaveVM = new VMOpgaveSpil();
+            Opgave opgave = db.Opgave.Find(id);
+
+            List<OpgaveSpil> OS = db.OpgaveSpil.Where(o => o.ID_Opgave == id).ToList();
+
+            opgaveVM.Title = opgave.Title;
+            opgaveVM.Beskrivelse = opgave.Beskrivelse;
+            opgaveVM.ID_Fag = opgave.ID_Fag;
+            opgaveVM.ID_Klasse = opgave.ID_Klasse;
+
+            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Spil));
+            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Niveau));
+
+
+            List<string> navne = new List<string>();
+            List<int> scorer = new List<int>();
+            List<int> ids = new List<int>();
+
+
+            var ChartData = (from e in db.Elev
+                        join d in db.Data on e.ID equals d.ID_Elev
+                        where d.ID_Opgave == id
+                        orderby d.Score descending
+                        select new
+                        {
+                            e.ID,
+                            e.Fornavn,
+                            d.Score
+                        }).ToArray();
+
+            foreach (var d in ChartData)
+            {
+                if (!(ids.Contains(d.ID))) { 
+                navne.Add(d.Fornavn);
+                scorer.Add(d.Score);
+                ids.Add(d.ID);
+                }
+            }
+
+            Session["chartDataX"] = navne;
+            Session["chartDataY"] = scorer;
+
+
+            return View(opgaveVM);
+        }
+
+        public ActionResult BarChart()
+        {
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

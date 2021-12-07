@@ -1,0 +1,10 @@
+﻿@{
+    var myChart = new Chart(width: 600, height: 400)
+.AddTitle("Score pr elev")
+.AddSeries(
+                name: "Elev",
+                xValue:  (List<string>)Session["chartDataX"],
+                yValues: (List<int>)Session["chartDataY"]
+                )
+.Write();
+}
