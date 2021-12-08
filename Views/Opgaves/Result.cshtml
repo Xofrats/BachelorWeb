@@ -14,8 +14,53 @@
 </head>
 <body>
     <h1>Resultatet af opgave @Model.Title</h1>
-    <p>
-        <img src="@Url.Action("BarChart")" alt="Chart" />
-    </p>
+    <div class="navbar">
+        <button onclick="ShowHints()">Hints chart</button>
+        <button onclick="ShowScore()">Score chart</button>
+        <button onclick="ShowTime()">Time chart</button>
+    </div>
+    <div id="chartsHint">
+        <p>
+            <img src="@Url.Action("HintPerson")" alt="Chart" />
+        </p>
+    </div>
+
+    <div id="chartsScore">
+        <p>
+            <img src="@Url.Action("BarChart")" alt="Chart" />
+        </p>
+    </div>
+
+    <div id="chartsTime">
+        <p>
+            <img src="@Url.Action("BarChart")" alt="Chart" />
+        </p>
+    </div>
+
 </body>
 </html>
+
+<script>
+    var hints = document.getElementById("chartsHint")
+    var score = document.getElementById("chartsScore")
+    var time = document.getElementById("chartsTime")
+
+    function ShowHints() {
+        hints.style.display = "block"
+        score.style.display = "none"
+        time.style.display = "none"
+    }
+
+    function ShowScore() {
+        hints.style.display = "none"
+        score.style.display = "block"
+        time.style.display = "none"
+    }
+
+    function ShowTime() {
+        hints.style.display = "none"
+        score.style.display = "none"
+        time.style.display = "block"
+    }
+
+</script>

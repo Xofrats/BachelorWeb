@@ -10,4 +10,10 @@ namespace BachelorWeb.Models
        public String Navn { get; set; }
        public int Score { get; set; }
     }
+
+    public class HintsprPersonBarChartModel
+    {
+        public String Navn { get; set; }
+        public int Hints { get; set; }
+    }
 }

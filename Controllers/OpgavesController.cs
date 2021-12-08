@@ -14,6 +14,7 @@ namespace BachelorWeb
     public class OpgavesController : Controller
     {
         private Learn_BasicEntities db = new Learn_BasicEntities();
+        ChartMaker charts = new ChartMaker();
 
         // GET: Opgaves
         public ActionResult Index()
@@ -202,40 +203,21 @@ namespace BachelorWeb
             OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Spil));
             OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Niveau));
 
-
-            List<string> navne = new List<string>();
-            List<int> scorer = new List<int>();
-            List<int> ids = new List<int>();
-
-
-            var ChartData = (from e in db.Elev
-                        join d in db.Data on e.ID equals d.ID_Elev
-                        where d.ID_Opgave == id
-                        orderby d.Score descending
-                        select new
-                        {
-                            e.ID,
-                            e.Fornavn,
-                            d.Score
-                        }).ToArray();
-
-            foreach (var d in ChartData)
-            {
-                if (!(ids.Contains(d.ID))) { 
-                navne.Add(d.Fornavn);
-                scorer.Add(d.Score);
-                ids.Add(d.ID);
-                }
-            }
-
-            Session["chartDataX"] = navne;
-            Session["chartDataY"] = scorer;
+            charts.MakeChartData(opgave.ID);
 
 
             return View(opgaveVM);
         }
 
+      
+
         public ActionResult BarChart()
+        {
+
+            return View();
+        }
+
+        public ActionResult HintPerson()
         {
 
             return View();

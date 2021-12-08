@@ -1,0 +1,21 @@
+﻿@{
+    var myChart = new Chart(width: 600, height: 400)
+        .AddTitle("Hints pr elev")
+        .AddSeries(
+                chartType: "StackedColumn",
+                        name: "Elev",
+                        xValue: (List<string>)Session["chart_navne"],
+                        yValues: (List<int>)Session["chart_hints"]
+                        )
+
+        .Write();
+
+    //for (i = 0; i < seriesOptions.length; i++)
+    //{
+    //    chart.addSeries({
+    //    name: seriesOptions[i].name,
+    //    data: seriesOptions[i].data
+    //        }, true);
+
+    //};
+}

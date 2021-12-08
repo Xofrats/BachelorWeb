@@ -192,6 +192,7 @@
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BarChartModel.cs" />
+    <Compile Include="Models\ChartMaker.cs" />
     <Compile Include="Niveau.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
@@ -285,6 +286,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Opgaves\Result.cshtml" />
     <Content Include="Views\Opgaves\BarChart.cshtml" />
+    <Content Include="Views\Opgaves\HintPerson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
