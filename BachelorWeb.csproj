@@ -287,6 +287,8 @@
     <Content Include="Views\Opgaves\Result.cshtml" />
     <Content Include="Views\Opgaves\BarChart.cshtml" />
     <Content Include="Views\Opgaves\HintPerson.cshtml" />
+    <Content Include="Views\Opgaves\HintPie.cshtml" />
+    <Content Include="Views\Opgaves\TimeBubble.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

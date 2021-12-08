@@ -21,6 +21,8 @@ namespace BachelorWeb.Models
         {
             MakeBarChartScore(iD);
             Chart_hints_Person(iD);
+            Chart_Hints_Pie(iD);
+            Chart_Time_Bubble(iD);
 
         }
 
@@ -85,6 +87,77 @@ namespace BachelorWeb.Models
 
             HttpContext.Current.Session["chart_navne"] = navne;
             HttpContext.Current.Session["chart_hints"] = hints;
+
+        }
+
+        public void Chart_Hints_Pie(int iD)
+        {
+            List<string> navne = new List<string>();
+            List<int> count = new List<int>();
+            List<int> ids = new List<int>();
+
+            var ChartData = (from e in db.Elev
+                             join d in db.Data on e.ID equals d.ID_Elev
+                             where d.ID_Opgave == iD
+                             orderby d.Score descending
+                             select new
+                             {
+                                 e.ID,
+                                 e.Fornavn
+                             }).ToArray();
+
+            foreach (var d in ChartData)
+            {
+                if (!(ids.Contains(d.ID)))
+                {
+
+                    navne.Add(d.Fornavn);
+                    ids.Add(d.ID);
+                    var total = ChartData.Count(s => s.Fornavn == d.Fornavn);
+                    count.Add(total);
+                }
+            }
+
+            HttpContext.Current.Session["chart_pie_navne"] = navne;
+            HttpContext.Current.Session["chart_count_games"] = count;
+
+        }
+
+        public void Chart_Time_Bubble(int iD)
+        {
+            List<string> navne = new List<string>();
+            List<int> Day = new List<int>();
+            List<int> Score = new List<int>();
+
+
+            var ChartData = (from e in db.Elev
+                             join d in db.Data on e.ID equals d.ID_Elev
+                             where d.ID_Opgave == iD
+                             orderby d.Score descending
+                             select new
+                             {
+                                 e.ID,
+                                 e.Fornavn,
+                                 d.Dato,
+                                 d.Score
+                             }).ToArray();
+
+            foreach (var d in ChartData)
+            {
+                {
+
+                    navne.Add(d.Fornavn);
+                    int day = d.Dato.Value.Day;
+                 
+
+                    Day.Add(day);
+                    Score.Add(d.Score);
+                }
+            }
+
+            HttpContext.Current.Session["chart_BubbleX"] = navne;
+            HttpContext.Current.Session["chart_BubbleY"] = Day;
+            HttpContext.Current.Session["chart_BubbleSize"] = Score;
 
         }
     }

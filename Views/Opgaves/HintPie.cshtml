@@ -1,0 +1,13 @@
+﻿@{
+    var myChart = new Chart(width: 400, height: 400)
+        .AddTitle("Antal forsøg pr elev")
+        .AddSeries(
+                chartType: "pie",
+                        name: "Elev",
+                        xValue: (List<string>)Session["chart_pie_navne"],
+                        yValues: (List<int>)Session["chart_count_games"]
+                        )
+
+        .Write();
+
+}

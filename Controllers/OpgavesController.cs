@@ -223,6 +223,18 @@ namespace BachelorWeb
             return View();
         }
 
+        public ActionResult HintPie()
+        {
+
+            return View();
+        }
+
+        public ActionResult TimeBubble()
+        {
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
