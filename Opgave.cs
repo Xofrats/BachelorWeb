@@ -18,6 +18,7 @@ namespace BachelorWeb
         public Opgave()
         {
             this.OpgaveSpil = new HashSet<OpgaveSpil>();
+            this.Data = new HashSet<Data>();
         }
     
         public int ID { get; set; }
@@ -27,6 +28,8 @@ namespace BachelorWeb
         public Nullable<int> ID_Lærer { get; set; }
         public Nullable<int> ID_Status { get; set; }
         public Nullable<int> ID_Klasse { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpgaveSpil> OpgaveSpil { get; set; }
@@ -34,5 +37,7 @@ namespace BachelorWeb
         public virtual Klasse Klasse { get; set; }
         public virtual Lærer Lærer { get; set; }
         public virtual Status Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Data> Data { get; set; }
     }
 }

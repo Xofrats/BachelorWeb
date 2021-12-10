@@ -17,6 +17,8 @@ namespace BachelorWeb
             public List<int> ID_Spil { get; set; }
             public List<int> ID_Niveau { get; set; }
 
+            public DateTime DueDate { get; set; }
+
             public VMOpgaveSpil()
             {
                 Title = "";

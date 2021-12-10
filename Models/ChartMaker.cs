@@ -80,7 +80,7 @@ namespace BachelorWeb.Models
                 {
                     
                     navne.Add(d.Fornavn);
-                    hints.Add(d.Hints.GetValueOrDefault(0));
+                    hints.Add(d.Hints);
                     ids.Add(d.ID);
                 }
             }
@@ -147,7 +147,7 @@ namespace BachelorWeb.Models
                 {
 
                     navne.Add(d.Fornavn);
-                    int day = d.Dato.Value.Day;
+                    int day = d.Dato.Day;
                  
 
                     Day.Add(day);

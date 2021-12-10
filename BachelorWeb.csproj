@@ -193,13 +193,13 @@
     </Compile>
     <Compile Include="Models\BarChartModel.cs" />
     <Compile Include="Models\ChartMaker.cs" />
+    <Compile Include="Controllers\OpgavesController.cs" />
     <Compile Include="Niveau.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
     <Compile Include="Opgave.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\OpgavesController.cs" />
     <Compile Include="OpgaveSpil.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
@@ -225,7 +225,7 @@
     <Compile Include="Test.cs">
       <DependentUpon>Learn_Basic.tt</DependentUpon>
     </Compile>
-    <Compile Include="Viewmodels.cs" />
+    <Compile Include="Models\Viewmodels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -285,10 +285,10 @@
     <Content Include="Views\Opgaves\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Opgaves\Result.cshtml" />
-    <Content Include="Views\Opgaves\BarChart.cshtml" />
-    <Content Include="Views\Opgaves\HintPerson.cshtml" />
-    <Content Include="Views\Opgaves\HintPie.cshtml" />
-    <Content Include="Views\Opgaves\TimeBubble.cshtml" />
+    <Content Include="Views\Opgaves\Charts\BarChart.cshtml" />
+    <Content Include="Views\Opgaves\Charts\HintPerson.cshtml" />
+    <Content Include="Views\Opgaves\Charts\HintPie.cshtml" />
+    <Content Include="Views\Opgaves\Charts\TimeBubble.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

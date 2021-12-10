@@ -14,8 +14,17 @@ namespace BachelorWeb
     
     public partial class Gæst
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Gæst()
+        {
+            this.Data = new HashSet<Data>();
+        }
+    
         public int ID { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Nickname { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Data> Data { get; set; }
     }
 }

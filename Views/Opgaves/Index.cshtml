@@ -8,54 +8,69 @@
 <h2>Oversigt over opgaver</h2>
 
 <p>
-    <input type="button" value="Create" onclick="location.href='@Url.Action("Opret opgave", "Create" )'" />
+    <input type="button" class="btn btn-lg btn-primary" value="Opret ny opgave" onclick="location.href='@Url.Action("Create", "Opgaves" )'" />
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Status.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fag.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Klasse.Navn)
-        </th>
-    </tr>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Status
+            </th>
+            <th>
+                Opgave title
+            </th>
+            <th>
+                Fag
+            </th>
+            <th>
+                Klasse
+            </th>
+            <th>
+                Afleveringsdato
+            </th>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Status.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Fag.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Klasse.Navn)
-    </td>
-    <td>
-        @Html.ActionLink("Ændre", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Detaljer", "Details", new { id = item.ID }) |
+            <th>
+                Muligheder
+            </th>
+        </tr>
+    </thead>
 
-        @if (item.Status.ID == 2)
+    <tbody>
+        @foreach (var item in Model)
         {
-            @Html.ActionLink("Afslut", "Afslut", new { id = item.ID })
-        }
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fag.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Klasse.Navn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Ændre", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Detaljer", "Details", new { id = item.ID }) |
 
-        @if (item.Status.ID == 3)
-        {
-            @Html.ActionLink("Resultat", "Result", new { id = item.ID })
-        }
+                    @if (item.Status.ID == 2)
+                    {
+                        @Html.ActionLink("Afslut", "Afslut", new { id = item.ID })
+                    }
 
-    </td>
-</tr>
-}
+                    @if (item.Status.ID == 3)
+                    {
+                        @Html.ActionLink("Resultat", "Result", new { id = item.ID })
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>

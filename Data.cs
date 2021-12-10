@@ -15,18 +15,20 @@ namespace BachelorWeb
     public partial class Data
     {
         public int ID { get; set; }
-        public string Tid { get; set; }
+        public double Tid { get; set; }
         public Nullable<int> ID_Opgave { get; set; }
-        public Nullable<int> ID_Spil { get; set; }
+        public int ID_Spil { get; set; }
         public Nullable<int> ID_Elev { get; set; }
         public Nullable<int> ID_Gæst { get; set; }
-        public Nullable<System.DateTime> Dato { get; set; }
+        public System.DateTime Dato { get; set; }
         public int Score { get; set; }
-        public Nullable<bool> Afsluttet { get; set; }
-        public Nullable<int> Hints { get; set; }
-        public Nullable<int> LastCheckpoint { get; set; }
+        public bool Afsluttet { get; set; }
+        public int Hints { get; set; }
+        public int LastCheckpoint { get; set; }
     
         public virtual Elev Elev { get; set; }
+        public virtual Gæst Gæst { get; set; }
+        public virtual Opgave Opgave { get; set; }
         public virtual Spil Spil { get; set; }
     }
 }

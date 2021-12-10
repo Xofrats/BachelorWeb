@@ -2,85 +2,253 @@
 
 
 @{
-    ViewBag.Title = "Lav Opgave";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 <h2>Lav en ny opgave</h2>
+<div class="row">
+    <div class="col-lg-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Page</th>
+                    <th></th>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-info" onclick="FormNavigation(1)">
+                    <td>1</td>
+                    <td>Title</td>
+                </tr>
+                <tr class="table-primary" onclick="FormNavigation(2)">
+                    <td>2</td>
+                    <td>Klasse</td>
+                </tr>
+                <tr class="table-primary" onclick="FormNavigation(3)">
+                    <td>3</td>
+                    <td>Tilføj spil</td>
+                </tr>
+                <tr class="table-primary" onclick="FormNavigation(4)">
+                    <td>4</td>
+                    <td>Afleveringsfrist</td>
+                </tr>
+                <tr class="table-primary" onclick="FormNavigation(5)">
+                    <td>5</td>
+                    <td>Review</td>
+                </tr>
+            </tbody>
+            </table>
 
-<div class="form-horizontal">
-    <h4>Opgave</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Beskrivelse, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Beskrivelse, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Beskrivelse, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Fag, "Fag", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Fag", null, "Alle fag",  htmlAttributes: new { @class = "form-control", @onchange = "OpdatererSpil(this.value)" })
-            @Html.ValidationMessageFor(model => model.ID_Fag, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Spil, "Tilføj Spil", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Spil", Enumerable.Empty<SelectListItem>(), "Vælg Spil", htmlAttributes: new { @ID = "Spil",@class = "form-control", @onchange = "OpdatererNiveau(this.value)" } )
-            @Html.ValidationMessageFor(model => model.ID_Spil, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Niveau, "Angiv niveau", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Niveauer", Enumerable.Empty<SelectListItem>(), "Angiv niveau", htmlAttributes: new { @class = "form-control", @ID = "Niveauer" })
-            @Html.ValidationMessageFor(model => model.ID_Niveau, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Klasse, "Vælg klasse", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Klasse", null, "Vælg klasse", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ID_Klasse, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Opret" class="btn btn-default" />
-
-            <input type="button" value="Gem udkast" onclick="location.href='@Url.Action("Gem", "Opgaves" )'" />
-        </div>
-    </div>
 </div>
-}
+    <div class="col-lg-6 col-lg-offset-5">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <h4>Opgave</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group page1">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page1">
+                @Html.LabelFor(model => model.Beskrivelse, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Beskrivelse, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Beskrivelse, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page2">
+                @Html.LabelFor(model => model.ID_Klasse, "Vælg klasse", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ID_Klasse", null, "Vælg klasse", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ID_Klasse, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page3">
+                @Html.LabelFor(model => model.ID_Fag, "Fag", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ID_Fag", null, "Alle fag", htmlAttributes: new { @class = "form-control", @onchange = "OpdatererSpil(this.value)" })
+                    @Html.ValidationMessageFor(model => model.ID_Fag, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page3">
+                @Html.LabelFor(model => model.ID_Spil, "Tilføj Spil", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ID_Spil", Enumerable.Empty<SelectListItem>(), "Vælg Spil", htmlAttributes: new { @ID = "Spil", @class = "form-control", @onchange = "OpdatererNiveau(this.value)" })
+                    @Html.ValidationMessageFor(model => model.ID_Spil, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page3">
+                @Html.LabelFor(model => model.ID_Niveau, "Angiv niveau", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Niveauer", Enumerable.Empty<SelectListItem>(), "Angiv niveau", htmlAttributes: new { @class = "form-control", @ID = "Niveauer" })
+                    @Html.ValidationMessageFor(model => model.ID_Niveau, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page4">
+                @Html.LabelFor(model => model.DueDate, "Vælg Afleveringsfrist", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="date" id="start" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                    <input type="time" id="appt" name="appt"
+                           min="09:00" max="18:00" required>
+                    @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group page5">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Opret" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        }
+        <div class="btn-group" role="group">
+            <input type="button" class="btn btn-primary" id="prev-btn" value="Forrige side" onclick="PrevPage()" />
+            <input type="button" class="btn btn-success" value="Gem udkast" onclick="FormNavigation()" />
+            <input type="button" class="btn btn-primary" id="next-btn" value="Næste side" onclick="NextPage()" />
+        </div>
+    </div>
+
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 <script>
+    currentPage = 1;
+    let page1 = document.getElementsByClassName("page1")
+    let page2 = document.getElementsByClassName("page2")
+    let page3 = document.getElementsByClassName("page3")
+    let page4 = document.getElementsByClassName("page4")
+    let page5 = document.getElementsByClassName("page5")
+
+    function NextPage() {
+        switch (currentPage) {
+            case 1:
+                showElement(page2)
+                hideElement(page1)
+                document.getElementById('next-btn').classList.add("disable")
+                document.getElementById('prev-btn').classList.remove("disable")
+
+                currentPage++
+        }
+    }
+
+    function PrevPage() {
+        switch (currentPage) {
+            case 2:
+                showElement(page1)
+                hideElement(page2)
+                document.getElementById('next-btn').classList.remove("disable")
+                document.getElementById('prev-btn').classList.add("disable")
+
+                currentPage--
+        }
+    }
+
+    function FormNavigation(val) {
+
+        switch (val) {        
+            case 1:
+                showElement(page1)
+                hideElement(page2)
+                hideElement(page3)
+                hideElement(page4)
+                hideElement(page5)
+
+                document.getElementById('next-btn').classList.remove("disable")
+                document.getElementById('prev-btn').classList.add("disable")
+
+                currentPage = 1
+                break;
+
+            case 2:
+                showElement(page2)
+                hideElement(page1)
+                hideElement(page3)
+                hideElement(page4)
+                hideElement(page5)
+                document.getElementById('next-btn').classList.remove("disable")
+                document.getElementById('prev-btn').classList.remove("disable")
+
+                currentPage = 2
+                break;
+
+            case 3:
+                showElement(page3)
+                hideElement(page2)
+                hideElement(page1)
+                hideElement(page4)
+                hideElement(page5)
+                document.getElementById('next-btn').classList.remove("disable")
+                document.getElementById('prev-btn').classList.remove("disable")
+
+                currentPage = 3
+                break;
+
+            case 4:
+                showElement(page4)
+                hideElement(page2)
+                hideElement(page3)
+                hideElement(page1)
+                hideElement(page5)
+                document.getElementById('next-btn').classList.remove("disable")
+                document.getElementById('prev-btn').classList.remove("disable")
+
+                currentPage = 4
+                break;
+
+            case 5:
+                showElement(page5)
+                hideElement(page2)
+                hideElement(page3)
+                hideElement(page4)
+                hideElement(page1)
+
+                document.getElementById('next-btn').classList.add("disable")
+                document.getElementById('prev-btn').classList.remove("disable")
+
+                currentPage = 5
+                break;
+        }
+       
+
+    }
+
+    function showElement(elements) {
+        for (var i = 0; i < elements.length; i++) {
+            if (this != elements[i]) {
+                elements[i].style.display = "block";
+            }
+        }
+    }
+
+
+    function hideElement(elements) {
+        for (var i = 0; i < elements.length; i++) {
+            if (this != elements[i]) {
+                elements[i].style.display = "none";
+            }
+        }
+
+    }
+
     function OpdatererNiveau(val) {
         var dropdown = document.getElementById("Niveauer");
         dropdown.options.length = 0;
