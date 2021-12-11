@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.page2,
+.page3,
+.page4,
+.page5 {
+    display: none;
+}
+
+
+#AddGamebtn {
+    display: none;
+}

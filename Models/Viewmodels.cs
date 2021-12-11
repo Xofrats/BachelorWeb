@@ -14,18 +14,27 @@ namespace BachelorWeb
             public Nullable<int> ID_Fag { get; set; }
             public int ID_Lærer { get; set; }
             public Nullable<int> ID_Klasse { get; set; }
-            public List<int> ID_Spil { get; set; }
-            public List<int> ID_Niveau { get; set; }
+            public IList<VMSpil> VMSpil { get; set; }
 
-            public DateTime DueDate { get; set; }
+            public Nullable<DateTime> DueDate { get; set; }
 
             public VMOpgaveSpil()
             {
                 Title = "";
                 Beskrivelse = "";
-                ID_Spil = new List<int>();
-                ID_Niveau = new List<int>();
+                VMSpil = new List<VMSpil>();
             }
+
+        }
+
+        public class VMSpil
+        {
+
+
+            public int ID_Spil { get; set; }
+            public int ID_Niveau { get; set; }
+
+
         }
 
     }

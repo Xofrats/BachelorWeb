@@ -10,11 +10,18 @@
 <p>
     <input type="button" class="btn btn-lg btn-primary" value="Opret ny opgave" onclick="location.href='@Url.Action("Create", "Opgaves" )'" />
 </p>
+
+
+<form action="FilterIndex" method="post">
+    @Html.DropDownList("ID_Status", null, "Vælg status", htmlAttributes: new { @ID = "index_status", name = "dd_status" })
+    <input type="submit" value="Submit Form" />
+
+</form>
 <table class="table table-hover">
     <thead>
         <tr>
             <th>
-                Status
+                @Html.ActionLink("Status", "Index", new { sortOrder = "Status" })
             </th>
             <th>
                 Opgave title

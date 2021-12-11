@@ -256,6 +256,8 @@
     </Content>
     <None Include="Properties\PublishProfiles\WebVRLearn20211022181246 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\FormGameSelect.js" />
+    <Content Include="Scripts\FormNavigation.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
