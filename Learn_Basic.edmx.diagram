@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a82aad9ee03f4df5949275b76b2346ea" Name="Diagram1" ZoomLevel="67">
+      <Diagram DiagramId="a82aad9ee03f4df5949275b76b2346ea" Name="Diagram1" ZoomLevel="52">
         <EntityTypeShape EntityType="Learn_BasicModel.Elev" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Gæst" Width="1.5" PointX="4.25" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Niveau" Width="1.5" PointX="10.125" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Niveau" Width="1.5" PointX="11.875" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.SpilNiveauer" Width="1.5" PointX="14.375" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.OpgaveSpil" Width="1.5" PointX="10.125" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.OpgaveSpil" Width="1.5" PointX="11.875" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.sysdiagrams" Width="1.5" PointX="13.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Test" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Fag" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Lærer" Width="1.5" PointX="4.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Fag" Width="1.5" PointX="8.875" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Lærer" Width="1.5" PointX="4.5" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.database_firewall_rules" Width="1.5" PointX="9.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.ipv6_database_firewall_rules" Width="1.5" PointX="11.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Learn_BasicModel.Login" Width="1.5" PointX="8" PointY="0.5" IsExpanded="true" />
@@ -30,11 +30,13 @@
         <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Klasse" />
         <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Lærer" />
         <AssociationConnector Association="Learn_BasicModel.FK_Opgave_Status" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Spil" Width="1.5" PointX="14.625" PointY="6.625" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Spil" Width="1.5" PointX="16.5" PointY="6.375" />
         <AssociationConnector Association="Learn_BasicModel.FK_OpgaveSpil_Spil" />
         <AssociationConnector Association="Learn_BasicModel.FK_Spil_Fag" />
-        <EntityTypeShape EntityType="Learn_BasicModel.Data" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="Learn_BasicModel.Data" Width="1.5" PointX="4.5" PointY="3" />
         <AssociationConnector Association="Learn_BasicModel.FK_Data_Elev" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Data_Gæst" />
+        <AssociationConnector Association="Learn_BasicModel.FK_Data_Opgave" />
         <AssociationConnector Association="Learn_BasicModel.FK_Data_Spil" />
       </Diagram>
     </edmx:Diagrams>

@@ -17,10 +17,33 @@ namespace BachelorWeb
         ChartMaker charts = new ChartMaker();
 
         // GET: Opgaves
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.ID_Status = new SelectList(db.Status, "ID", "Title");
             var opgave = db.Opgave.Include(o => o.Fag).Include(o => o.Lærer);
+
+            switch (sortOrder)
+            {
+                case "Status":
+                    opgave = opgave.OrderByDescending(s => s.ID_Status);
+                    break;
+                case "Date":
+                    opgave = opgave.OrderBy(s => s.DueDate);
+                    break;
+                default:
+                    opgave = opgave.OrderBy(s => s.ID);
+                    break;
+            }
+
             return View(opgave.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult FilterIndex(int dd_status)
+        {
+            var opgave = db.Opgave.Include(o => o.Fag).Include(o => o.Lærer).Where(o => o.ID_Status == dd_status);
+            
+            return View("Index");
         }
 
         // GET: Opgaves/Details/5
@@ -78,13 +101,7 @@ namespace BachelorWeb
                 return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
             } else
             {
-                var niveauer = (from s in db.Spil
-                                join f in db.Fag on s.ID_Fag equals f.ID
-                                select new
-                                {
-                                    ID = f.ID,
-                                    Navn = f.Title
-                                }).ToArray();
+                var niveauer = "";
 
                 return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
             }
@@ -93,7 +110,7 @@ namespace BachelorWeb
         // POST: Opgaves/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Beskrivelse,ID_Fag,ID_Spil,ID_Niveau,ID_Klasse,Status")] VMOpgaveSpil form)
+        public ActionResult Create([Bind(Include = "Title,Beskrivelse,ID_Fag,SpilList,ID_Klasse,DueDate")] VMOpgaveSpil form)
         {
             int ID = (int)Session["Userid"];
             Opgave opgave = new Opgave();
@@ -104,21 +121,23 @@ namespace BachelorWeb
             opgave.ID_Lærer = ID;
             opgave.ID_Status = 2;
             opgave.ID_Klasse = form.ID_Klasse;
+            opgave.StartDate = DateTime.Now;
+            opgave.DueDate = form.DueDate;
 
             db.Opgave.Add(opgave);
-            db.SaveChanges();
 
-            for(int i = 0; i < form.ID_Spil.Count(); i++)
+            for (int i = 0; i < form.VMSpil.Count(); i++)
             {
                 OpgaveSpil os = new OpgaveSpil();
                 os.ID_Opgave = opgave.ID;
-                os.ID_Spil = form.ID_Spil[i];
-                os.ID_Niveau = form.ID_Spil[i];
+                os.ID_Spil = form.VMSpil[i].ID_Spil;
+                os.ID_Niveau = form.VMSpil[i].ID_Niveau;
                 os.Order = i + 1;
 
-                db.OpgaveSpil.Add(os);
-                db.SaveChanges();
+                db.OpgaveSpil.Add(os);            
             }
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -144,11 +163,9 @@ namespace BachelorWeb
             opgaveVM.ID_Fag = opgave.ID_Fag;
             opgaveVM.ID_Klasse = opgave.ID_Klasse;
 
-            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Spil));
-            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Niveau));
-
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title", opgave.ID_Fag);
             ViewBag.Klasse = new SelectList(db.Klasse, "ID", "Navn", opgave.ID_Klasse);
+
             return View(opgaveVM);
         }
 
@@ -199,9 +216,6 @@ namespace BachelorWeb
             opgaveVM.Beskrivelse = opgave.Beskrivelse;
             opgaveVM.ID_Fag = opgave.ID_Fag;
             opgaveVM.ID_Klasse = opgave.ID_Klasse;
-
-            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Spil));
-            OS.ForEach(element => opgaveVM.ID_Spil.Add(element.ID_Niveau));
 
             charts.MakeChartData(opgave.ID);
 

@@ -2,88 +2,157 @@
 
 
 @{
-    ViewBag.Title = "Lav Opgave";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 <h2>Lav en ny opgave</h2>
+<div class="row">
+    <div class="col-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Page</th>
+                    <th></th>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-info naviCustom" id="Navi1" onclick="FormNavigation(1)">
+                    <td>1</td>
+                    <td>Title</td>
+                </tr>
+                <tr class="table-primary naviCustom" id="Navi2" onclick="FormNavigation(2)">
+                    <td>2</td>
+                    <td>Klasse</td>
+                </tr>
+                <tr class="table-primary naviCustom" id="Navi3" onclick="FormNavigation(3)">
+                    <td>3</td>
+                    <td>Tilføj spil</td>
+                </tr>
+                <tr class="table-primary naviCustom" id="Navi4" onclick="FormNavigation(4)">
+                    <td>4</td>
+                    <td>Afleveringsfrist</td>
+                </tr>
+                <tr class="table-primary naviCustom" id="Navi5" onclick="FormNavigation(5)">
+                    <td>5</td>
+                    <td>Review</td>
+                </tr>
+            </tbody>
+        </table>
 
-<div class="form-horizontal">
-    <h4>Opgave</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
+    </div>
+    <div class="col-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <h4>Opgave</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group page1">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @ID = "form_Title", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group page1">
+                    @Html.LabelFor(model => model.Beskrivelse, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Beskrivelse, 10, 50, new { @ID = "form_Beskriv", htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Beskrivelse, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group page2">
+                    @Html.LabelFor(model => model.ID_Klasse, "Vælg klasse", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ID_Klasse", null, "Vælg klasse", htmlAttributes: new { @ID = "form_Klasse", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ID_Klasse, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group page3">
+                    @Html.LabelFor(model => model.ID_Fag, "Fag", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ID_Fag", null, "Alle fag", htmlAttributes: new { @ID = "form_Fag", @class = "form-control", @onchange = "OpdatererSpil(this.value)" })
+                        @Html.ValidationMessageFor(model => model.ID_Fag, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group page3">
+                    <label class="control-label col-md-2">Tilføj spil</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("ID_Spil", Enumerable.Empty<SelectListItem>(), "Vælg Spil", htmlAttributes: new { @ID = "Spil", @class = "form-control", @onchange = "OpdatererNiveau(this.value)" })
+                    </div>
+                </div>
+
+                <div class="form-group page3">
+                    <label class="control-label col-md-2">Angiv niveau</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("Niveauer", Enumerable.Empty<SelectListItem>(), "Angiv niveau", htmlAttributes: new { @class = "form-control", @ID = "Niveauer", @onchange = "visKnap()" })
+                    </div>
+                </div>
+
+                <div class="form-group page3">
+                    <input type="button" id="AddGamebtn" value="Tilføj Spil" class="btn btn-success" onclick="AddGameToList()" />
+                </div>
+
+                <div class="form-group page3">
+                    <ul id="gamesList">
+                    </ul>
+                </div>
+
+                <div class="form-group page4">
+                    @Html.LabelFor(model => model.DueDate, "Vælg Afleveringsfrist", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="date" id="Frist_dato"
+                               min="2021-01-12">
+                    </div>
+                </div>
+
+                <div class="form-group page5">
+                    <h3>Title:</h3> <p id="review_Title"></p>
+                    <h3>Beskrivelse:</h3> <p id="review_Beskriv"></p>
+                    <h3>Klasse:</h3> <p id="review_Klasse"></p>
+                    <h3>Fag:</h3> <p id="review_Fag"></p>
+                    <h3>Spil:</h3> <ul id="review_Spil"></ul>
+                    <h3>Afleveringsfrist:</h3> <p id="review_Frist"></p>
+
+
+
+                    <input type="submit" value="Opret" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Beskrivelse, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Beskrivelse, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Beskrivelse, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Fag, "Fag", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Fag", null, "Alle fag",  htmlAttributes: new { @class = "form-control", @onchange = "OpdatererSpil(this.value)" })
-            @Html.ValidationMessageFor(model => model.ID_Fag, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Spil, "Tilføj Spil", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Spil", Enumerable.Empty<SelectListItem>(), "Vælg Spil", htmlAttributes: new { @ID = "Spil",@class = "form-control", @onchange = "OpdatererNiveau(this.value)" } )
-            @Html.ValidationMessageFor(model => model.ID_Spil, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Niveau, "Angiv niveau", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Niveauer", Enumerable.Empty<SelectListItem>(), "Angiv niveau", htmlAttributes: new { @class = "form-control", @ID = "Niveauer" })
-            @Html.ValidationMessageFor(model => model.ID_Niveau, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ID_Klasse, "Vælg klasse", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ID_Klasse", null, "Vælg klasse", htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ID_Klasse, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Opret" class="btn btn-default" />
-
-            <input type="button" value="Gem udkast" onclick="location.href='@Url.Action("Gem", "Opgaves" )'" />
-        </div>
+</div>
+<div class="row">
+    <div class="btn-group" role="group">
+        <input type="button" class="btn btn-primary" id="prev-btn" value="Forrige side" onclick="PrevPage()" />
+        <input type="button" class="btn btn-success" value="Gem udkast" onclick="FormNavigation()" />
+        <input type="button" class="btn btn-primary" id="next-btn" value="Næste side" onclick="NextPage()" />
     </div>
 </div>
-}
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 <script>
+
     function OpdatererNiveau(val) {
         var dropdown = document.getElementById("Niveauer");
         dropdown.options.length = 0;
+        var option = document.createElement("option");
+
+        option.text = "Angiv Niveau";
+        option.value = 0;
+        dropdown.options.add(option);
 
         $.ajax({
             type: "POST",
@@ -99,18 +168,27 @@
         })
     }
 
-    function makeOptions(data) {
-        var dropdown = document.getElementById("Niveauer");
-        var option = document.createElement("option");
 
-        option.text = data.Navn;
-        option.value = data.ID;
-        dropdown.options.add(option);
-    }
 
     function OpdatererSpil(val) {
+
+        var list = document.getElementById("gamesList")
+        while (list.firstChild) {
+            list.removeChild(list.lastChild);
+        }
+
+        spilIDer = [];
+
+        document.getElementById("AddGamebtn").style.display = "none";
+
         var dropdown = document.getElementById("Spil");
         dropdown.options.length = 0;
+
+        var option = document.createElement("option");
+
+        option.text = "Vælg spil";
+        option.value = 0;
+        dropdown.options.add(option);
 
         $.ajax({
             type: "POST",
@@ -126,13 +204,6 @@
         })
     }
 
-    function makeOptionsSpil(data) {
-        var dropdown = document.getElementById("Spil");
-
-        var option = document.createElement("option");
-
-        option.text = data.Navn;
-        option.value = data.ID;
-        dropdown.options.add(option);
-    }
 </script>
+<script src="~/Scripts/FormNavigation.js"></script>
+<script src="~/Scripts/FormGameSelect.js"></script>
