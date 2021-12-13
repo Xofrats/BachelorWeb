@@ -1,0 +1,34 @@
+﻿@{
+    var db = new Learn_BasicEntities();
+
+    int AssignmentID = (int)Session["AssignmentID"];
+
+    var ChartData = (from e in db.Elev
+                     join d in db.Data on e.ID equals d.ID_Elev
+                     where d.ID_Opgave == AssignmentID
+                     orderby d.Score descending
+                     select new
+                     {
+                         e.Fornavn,
+                         d.Score,
+                     }).ToArray();
+
+    var List = (from element in ChartData
+                group element by new { element.Fornavn } into g
+                select new
+                {
+                    Fornavn = g.First().Fornavn,
+                    Score = g.First().Score,
+                }).ToArray();
+
+
+
+    var myChart = new Chart(width: 600, height: 400)
+.AddTitle("Elevernes best score")
+.AddSeries(
+"default",
+xValue: List, xField: "Fornavn",
+yValues: List, yFields: "Score"
+)
+.Write();
+}

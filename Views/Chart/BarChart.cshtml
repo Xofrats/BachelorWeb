@@ -1,0 +1,27 @@
+﻿@{
+    var db = new Learn_BasicEntities();
+
+    int AssignmentID = (int)Session["AssignmentID"];
+
+    var ChartData = (from e in db.Elev
+                     join d in db.Data on e.ID equals d.ID_Elev
+                     where d.ID_Opgave == AssignmentID
+                     orderby d.Score descending
+                     select new
+                     {
+                         e.ID,
+                         e.Fornavn,
+                         d.Score
+                     }).ToArray();
+
+
+
+    var myChart = new Chart(width: 600, height: 400)
+    .AddTitle("Score pr elev")
+    .AddSeries(
+        "default",
+        xValue: ChartData, xField: "Fornavn",
+        yValues: ChartData, yFields: "Score"
+        )
+    .Write();
+}

@@ -1,4 +1,4 @@
-﻿@model BachelorWeb.Viewmodels.VMOpgaveSpil
+﻿@model BachelorWeb.Opgave
 
 @{
     ViewBag.Title = "Result";
@@ -14,26 +14,62 @@
 </head>
 <body>
     <h1>Resultatet af opgave @Model.Title</h1>
-    <div class="navbar">
-        <button onclick="ShowHints()">Hints chart</button>
-        <button onclick="ShowScore()">Score chart</button>
-        <button onclick="ShowTime()">Time chart</button>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-primary" onclick="ShowHints()">Hints chart</button>
+        <button type="button" class="btn btn-primary" onclick="ShowScore()">Score chart</button>
+        <button type="button" class="btn btn-primary" onclick="ShowTime()">Time chart</button>
     </div>
+
+    <h3>oversigt</h3>
+    <div class="row">
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header">Gennemsnitsscore</div>
+            <div class="card-body">
+                <h3 class="card-text">(@Model.Data.Average(d => d.Score))</h3>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header">Antal elever der blev færdige</div>
+            <div class="card-body">
+                <h3 class="card-text">(@Model.Data.Select(d => d.ID_Elev).Distinct().ToList().Count)</h3>
+            </div>
+        </div>
+    </div>
+
+
     <div id="chartsHint">
+        <h3>Diagram over hints</h3>
         <p>
-            <img src="@Url.Action("HintPerson")" alt="Chart" style="display: inline-block;"/> <img src="@Url.Action("HintPie")" alt="Chart" style="display: inline-block; float: right" />
+            <img src="@Url.Action("HintPerson", "Chart", new {})" alt="Chart" style="display: inline-block;" /> <img src="@Url.Action("HintPie", "Chart", new {})" alt="Chart" style="display: inline-block; float: right" />
         </p>
     </div>
 
     <div id="chartsScore">
-        <p>
-            <img src="@Url.Action("BarChart")" alt="Chart" />
-        </p>
+        <h3>Diagrammer over score</h3>
+        <div class="row">
+            <div class="col-6">
+                <img src="@Url.Action("ScoreCompareAll", "Chart", new { })" alt="Chart" />
+            </div>
+
+            <div class="col-6">
+                <img src="@Url.Action("ScoreBest", "Chart", new { })" alt="Chart" />
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-6">
+                <img src="@Url.Action("ScoreOverDay", "Chart", new { })" alt="Chart" />
+            </div>
+            <div class="col-6">
+                <img src="@Url.Action("ScoreWorst", "Chart", new { })" alt="Chart" />
+            </div>
+        </div>
     </div>
 
     <div id="chartsTime">
+        <h3>Diagrammer over time</h3>
         <p>
-            <img src="@Url.Action("TimeBubble")" alt="Chart" />
+            <img src="@Url.Action("TimeBubble", "Chart", new { })" alt="Chart" />
         </p>
     </div>
 

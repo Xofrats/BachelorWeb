@@ -31,6 +31,18 @@ namespace BachelorWeb
 
         }
 
+        public class VMResult
+        {
+            //Skal i opgave tabellen
+            public string Title { get; set; }
+            public string Beskrivelse { get; set; }
+            public int ID_Fag { get; set; }
+            public int ID_Klasse { get; set; }
+            public DateTime DueDate { get; set; }
+
+            public int ID_opgave { get; set; }
+        }
+
         public class VMSpil
         {
 

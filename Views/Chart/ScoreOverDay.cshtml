@@ -1,0 +1,53 @@
+﻿@{
+    var db = new Learn_BasicEntities();
+
+     int AssignmentID = (int)Session["AssignmentID"];
+
+    var elever = (from e in db.Elev
+                  join d in db.Data on e.ID equals d.ID_Elev
+                  where d.ID_Opgave == AssignmentID
+                  select new
+                  {
+                      e.Fornavn
+                  }).Distinct().ToArray();
+
+
+    var myChart = new Chart(width: 600, height: 400)
+    .AddTitle("Score pr elev");
+
+    Console.WriteLine("testing");
+    Console.WriteLine(elever.Length);
+
+    foreach (var x in elever)
+    {
+
+        var ChartData = (from e in db.Elev
+                         join d in db.Data on e.ID equals d.ID_Elev
+                         where d.ID_Opgave == 4 && e.Fornavn == x.Fornavn
+                         orderby d.Dato ascending
+                         select new
+                         {
+                             e.Fornavn,
+                             d.Score,
+                             date = d.Dato.ToString()
+                         }).ToArray();
+
+        myChart.AddSeries(
+        chartType: "line",
+        name: x.Fornavn + " line",
+        xValue: ChartData, xField: "date",
+        yValues: ChartData, yFields: "Score"
+        )
+        .AddSeries(
+        chartType: "point",
+        name: x.Fornavn,
+        xValue: ChartData, xField: "date",
+        yValues: ChartData, yFields: "Score"
+        )
+        .AddLegend("Navn");
+
+    }
+
+
+    myChart.Write();
+}

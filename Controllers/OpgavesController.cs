@@ -207,47 +207,17 @@ namespace BachelorWeb
 
         public ActionResult Result(int id)
         {
-            VMOpgaveSpil opgaveVM = new VMOpgaveSpil();
+            Session.Add("AssignmentID", id);
             Opgave opgave = db.Opgave.Find(id);
-
-            List<OpgaveSpil> OS = db.OpgaveSpil.Where(o => o.ID_Opgave == id).ToList();
-
-            opgaveVM.Title = opgave.Title;
-            opgaveVM.Beskrivelse = opgave.Beskrivelse;
-            opgaveVM.ID_Fag = opgave.ID_Fag;
-            opgaveVM.ID_Klasse = opgave.ID_Klasse;
 
             charts.MakeChartData(opgave.ID);
 
-
-            return View(opgaveVM);
+            return View(opgave);
         }
 
       
 
-        public ActionResult BarChart()
-        {
-
-            return View();
-        }
-
-        public ActionResult HintPerson()
-        {
-
-            return View();
-        }
-
-        public ActionResult HintPie()
-        {
-
-            return View();
-        }
-
-        public ActionResult TimeBubble()
-        {
-
-            return View();
-        }
+      
 
         protected override void Dispose(bool disposing)
         {
