@@ -9,14 +9,18 @@ namespace BachelorWeb
     {
         public class VMOpgaveSpil
         {
+            //Skal i opgave tabellen
             public string Title { get; set; }
             public string Beskrivelse { get; set; }
             public Nullable<int> ID_Fag { get; set; }
             public int ID_Lærer { get; set; }
-            public Nullable<int> ID_Klasse { get; set; }
-            public IList<VMSpil> VMSpil { get; set; }
+            public Nullable<int> ID_Klasse { get; set; }          
 
             public Nullable<DateTime> DueDate { get; set; }
+
+            //Skal i OpgaveSpil tabellen
+            public IList<VMSpil> VMSpil { get; set; }
+
 
             public VMOpgaveSpil()
             {

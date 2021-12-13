@@ -101,13 +101,7 @@ namespace BachelorWeb
                 return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
             } else
             {
-                var niveauer = (from s in db.Spil
-                                join f in db.Fag on s.ID_Fag equals f.ID
-                                select new
-                                {
-                                    ID = f.ID,
-                                    Navn = f.Title
-                                }).ToArray();
+                var niveauer = "";
 
                 return Json(new { List = niveauer }, JsonRequestBehavior.AllowGet);
             }
@@ -118,24 +112,21 @@ namespace BachelorWeb
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Title,Beskrivelse,ID_Fag,SpilList,ID_Klasse,DueDate")] VMOpgaveSpil form)
         {
-          //  int ID = (int)Session["Userid"];
+            int ID = (int)Session["Userid"];
             Opgave opgave = new Opgave();
 
-            //opgave.Title = form.Title;
-            //opgave.Beskrivelse = form.Beskrivelse;
-            //opgave.ID_Fag = form.ID_Fag;
-            //opgave.ID_Lærer = ID;
-            //opgave.ID_Status = 2;
-            //opgave.ID_Klasse = form.ID_Klasse;
-            //opgave.StartDate = DateTime.Now;
-            //opgave.DueDate = form.DueDate;
+            opgave.Title = form.Title;
+            opgave.Beskrivelse = form.Beskrivelse;
+            opgave.ID_Fag = form.ID_Fag;
+            opgave.ID_Lærer = ID;
+            opgave.ID_Status = 2;
+            opgave.ID_Klasse = form.ID_Klasse;
+            opgave.StartDate = DateTime.Now;
+            opgave.DueDate = form.DueDate;
 
-            //db.Opgave.Add(opgave);
-            //db.SaveChanges();
+            db.Opgave.Add(opgave);
 
-  
-
-            for(int i = 0; i < form.VMSpil.Count(); i++)
+            for (int i = 0; i < form.VMSpil.Count(); i++)
             {
                 OpgaveSpil os = new OpgaveSpil();
                 os.ID_Opgave = opgave.ID;
@@ -143,10 +134,10 @@ namespace BachelorWeb
                 os.ID_Niveau = form.VMSpil[i].ID_Niveau;
                 os.Order = i + 1;
 
-                db.OpgaveSpil.Add(os);
-
-               // db.SaveChanges();
+                db.OpgaveSpil.Add(os);            
             }
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
