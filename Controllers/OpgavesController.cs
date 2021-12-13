@@ -45,8 +45,6 @@ namespace BachelorWeb
             
             return View("Index");
         }
-
-        // GET: Opgaves/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -60,8 +58,6 @@ namespace BachelorWeb
             }
             return View(opgave);
         }
-
-        // GET: Opgaves/Create
         public ActionResult Create()
         {
             ViewBag.ID_Fag = new SelectList(db.Fag, "ID", "Title");

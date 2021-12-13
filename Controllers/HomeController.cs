@@ -12,12 +12,5 @@ namespace BachelorWeb.Controllers
         {
             return View();
         }
-
-        public ActionResult Test()
-        {
-            ViewBag.Message = "Getting test from database";
-
-            return View();
-        }
     }
 }
